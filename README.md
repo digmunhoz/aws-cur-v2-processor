@@ -58,13 +58,17 @@ Place your .parquet files in the parquet_files directory. After processing, the 
 
 ## Configuration Variables
 
-| Variable Name         | Type    | Default Value | Meaning                                        |
-|-----------------------|---------|---------------|------------------------------------------------|
-| `ELASTICSEARCH_HOST`  | String  | `localhost`   | The host address of the Elasticsearch server   |
-| `ELASTICSEARCH_PORT`  | Integer | `9200`        | The port number of the Elasticsearch server    |
-| `FILE_THREADS`        | Integer | 2             | How many parquet files will be processed at same time |
-| `WORKER_THREADS`      | Integer | 2             | How many workers will be used on elasticsearch bulk insert |
-
+| Variable Name          | Type    | Default Value | Meaning                                        |
+|------------------------|---------|---------------|------------------------------------------------|
+| `ELASTICSEARCH_HOST`   | String  | `localhost`   | The host address of the Elasticsearch server   |
+| `ELASTICSEARCH_PORT`   | Integer | `9200`        | The port number of the Elasticsearch server    |
+| `FILE_THREADS`         | Integer | 2             | How many parquet files will be processed at same time |
+| `WORKER_THREADS`       | Integer | 2             | How many workers will be used on elasticsearch bulk insert |
+| `STORAGE_TYPE`         | String  | `LOCAL`       | Data source to find parquet files. `LOCAL` or `S3` |
+| `AWS_ACCESS_KEY_ID`    | String  |               | AWS Access Key to connect on S3 when using `STORAGE_TYPE` as `S3` |
+| `AWS_SECRET_ACCESS_KEY`| String  |               | AWS Access Key ID to connect on S3 when using `STORAGE_TYPE` as `S3` |
+| `AWS_REGION`           | String  | `us-east-1`   | AWS region where S3 Bucket was created         |
+| `AWS_BUCKET_NAME`      | String  |               | AWS S3 Bucket where parquet files are created  |
 
 ## Accessing Grafana
 After processing the files, you can access Grafana at:
