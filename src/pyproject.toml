@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "src"
+version = "0.1.0"
+description = ""
+authors = ["Diogo Munhoz Fraga"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pyarrow = "^14.0.2"
+fastparquet = "^2023.10.1"
+opensearch-py = "^2.4.2"
+prettyconf = "^2.2.1"
+ipdb = "^0.13.13"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,116 @@
+# AWS Cur V2 Processor
+
+This project is a worker designed to process Parquet files and store the data in Elasticsearch, following the "ports and adapters" architecture.
+
+## Prerequisites
+Ensure you have the following software installed:
+
+- Docker
+- Docker Compose
+
+## Setup and Usage
+The system uses a Makefile for easy management. Below are the commands you can use:
+
+### Build the Project
+Before running the project, you need to build the Docker containers:
+
+```sh
+make build
+```
+
+### Start the Project
+After building, start the project with:
+
+```sh
+make start
+```
+
+### Run processor
+To process all parquet files:
+
+```sh
+make cur
+```
+
+### Check Container Status
+To check the status of the running containers:
+
+```sh
+make status
+```
+
+### View Logs
+To view the logs of the running containers:
+
+```sh
+make logs
+```
+
+### Stop the Project
+To stop all running containers:
+
+```sh
+make stop
+```
+
+### Processing Parquet Files
+Place your .parquet files in the parquet_files directory. After processing, the files will be renamed with the .processed extension.
+
+## Configuration Variables
+
+| Variable Name         | Type    | Default Value | Meaning                                        |
+|-----------------------|---------|---------------|------------------------------------------------|
+| `ELASTICSEARCH_HOST`  | String  | `localhost`   | The host address of the Elasticsearch server   |
+| `ELASTICSEARCH_PORT`  | Integer | `9200`        | The port number of the Elasticsearch server    |
+| `FILE_THREADS`        | Integer | 2             | How many parquet files will be processed at same time |
+| `WORKER_THREADS`      | Integer | 2             | How many workers will be used on elasticsearch bulk insert |
+
+
+## Accessing Grafana
+After processing the files, you can access Grafana at:
+
+http://localhost:3000
+
+Use the following credentials:
+
+- Username: admin
+- Password: password
+
+## Directory Structure
+```markdown
+src/
+├── core/
+│   ├── __init__.py
+│   ├── domain/
+│   │   ├── __init__.py
+│   │   ├── models.py
+│   │   └── services.py
+│   ├── application/
+│   │   ├── __init__.py
+│   │   ├── use_cases.py
+│   │   └── commands.py
+├── ports/
+│   ├── __init__.py
+│   ├── input/
+│   │   ├── __init__.py
+│   │   └── parquet_reader.py
+│   ├── output/
+│   │   ├── __init__.py
+│   │   └── elasticsearch_writer.py
+│   │   └── file_manager.py
+├── adapters/
+│   ├── __init__.py
+│   ├── input/
+│   │   ├── __init__.py
+│   │   └── parquet_reader_adapter.py
+│   ├── output/
+│   │   ├── __init__.py
+│   │   └── elasticsearch_adapter.py
+│   │   └── file_manager_adapter.py
+├── config/
+│   ├── __init__.py
+│   └── settings.py
+└── main.py
+```
+
+Follow these instructions to set up, run, and manage the AWS Cur V2 Processor. Ensure your environment meets the prerequisites and that you follow the steps in the correct order.

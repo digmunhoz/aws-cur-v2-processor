@@ -1,0 +1,66 @@
+networks:
+  backend:
+    driver: bridge
+
+services:
+
+  opensearch:
+    image: opensearchproject/opensearch:latest
+    container_name: opensearch
+    environment:
+      - discovery.type=single-node
+      - node.name=opensearch
+      - bootstrap.memory_lock=true
+      - "OPENSEARCH_JAVA_OPTS=-Xms1024m -Xmx1024m"
+      - "DISABLE_SECURITY_PLUGIN=true"
+      - "DISABLE_INSTALL_DEMO_CONFIG=true"
+    volumes:
+      - ${PWD}/volumes/opensearch:/usr/share/opensearch/data
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    ports:
+      - 9200:9200
+      - 9600:9600
+
+  opensearch-dashboards:
+    image: opensearchproject/opensearch-dashboards:latest
+    container_name: opensearch-dashboards
+    ports:
+      - 5601:5601
+    expose:
+      - "5601"
+    environment:
+      - 'OPENSEARCH_HOSTS=["http://opensearch:9200"]'
+      - "DISABLE_SECURITY_DASHBOARDS_PLUGIN=true"
+
+  grafana:
+    image: grafana/grafana-oss:8.5.21
+    container_name: grafana
+    hostname: grafana
+    environment:
+      - GF_USERS_DEFAULT_THEME=light
+      - GF_SECURITY_ADMIN_PASSWORD=password
+      - GF_INSTALL_PLUGINS=grafana-clickhouse-datasource
+    volumes:
+      - ${PWD}/docker/infra/grafana/fs/volumes/grafana/etc/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ${PWD}/docker/infra/grafana/fs/volumes/grafana/etc/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ${PWD}/docker/infra/grafana/dashboards:/var/lib/grafana/dashboards
+    ports:
+      - "0.0.0.0:3000:3000"
+
+  cur:
+    build:
+      context: ${PWD}
+      dockerfile: docker/Dockerfile
+    container_name: cur
+    hostname: cur
+    env_file:
+      - ${PWD}/docker/env
+    volumes:
+      - ${PWD}/src:/app/
+      - ${PWD}/parquet_files:/tmp/parquet_files
