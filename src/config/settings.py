@@ -11,3 +11,4 @@ class Settings:
     AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY", default=None)
     AWS_REGION = config("AWS_REGION", default="us-east-1")
     AWS_BUCKET_NAME = config("AWS_BUCKET_NAME", default="")
+    REPROCESS = config("REPROCESS", default=False, cast=config.boolean)

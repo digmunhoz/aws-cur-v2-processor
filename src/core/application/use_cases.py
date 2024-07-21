@@ -1,4 +1,5 @@
 from config.logging import logging
+from config.settings import Settings
 
 
 class ProcessParquetFile:
@@ -45,9 +46,10 @@ class ProcessParquetFile:
         logging.info(f"Writing file: {source} into elasticsearch")
         self.elasticsearch_writer.write(transformed_data)
 
-        logging.info(f"Renaming file {source}")
-        processed_file_path = source + ".processed"
-        self.file_manager.rename(source, processed_file_path, self.storage_type, bucket_name)
+        if not Settings.REPROCESS:
+            logging.info(f"Renaming file {source}")
+            processed_file_path = source + ".processed"
+            self.file_manager.rename(source, processed_file_path, self.storage_type, bucket_name)
 
 
 class ValidateData:

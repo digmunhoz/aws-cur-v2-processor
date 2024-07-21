@@ -26,6 +26,7 @@ class FileManagerAdapter(FileManager):
         self.s3_client.delete_object(Bucket=bucket_name, Key=source_key)
 
     def rename(self, source, dest, storage_type='LOCAL', bucket_name=None):
+
         if storage_type == 'S3' and self.s3_client:
             self.rename_s3(bucket_name, source, dest)
         else:

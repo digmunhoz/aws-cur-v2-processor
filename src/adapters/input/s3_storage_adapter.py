@@ -1,7 +1,7 @@
 import boto3
 import pandas as pd
 from io import BytesIO
-from config.logging import logging
+from config.settings import Settings
 from ports.input.parquet_reader import ParquetReader
 
 class S3ReaderAdapter(ParquetReader):
@@ -24,11 +24,16 @@ class S3ReaderAdapter(ParquetReader):
         paginator = self.s3_client.get_paginator('list_objects_v2')
         page_iterator = paginator.paginate(Bucket=bucket_name, Prefix='reports/monthly-reports/')
 
+        if Settings.REPROCESS:
+            file_extension = ".parquet.processed"
+        else:
+            file_extension = ".parquet"
+
         parquet_files = []
         for page in page_iterator:
             if 'Contents' in page:
                 for obj in page['Contents']:
-                    if obj['Key'].endswith('.parquet'):
+                    if obj['Key'].endswith(file_extension):
                         parquet_files.append(obj['Key'])
 
         return parquet_files
