@@ -69,6 +69,7 @@ Place your .parquet files in the parquet_files directory. After processing, the 
 | `AWS_SECRET_ACCESS_KEY`| String  |               | AWS Access Key ID to connect on S3 when using `STORAGE_TYPE` as `S3` |
 | `AWS_REGION`           | String  | `us-east-1`   | AWS region where S3 Bucket was created         |
 | `AWS_BUCKET_NAME`      | String  |               | AWS S3 Bucket where parquet files are created  |
+| `REPROCESS`            | Bool    | `False`       | If `True`, all processed file will be reprocessed |
 
 ## Accessing Grafana
 After processing the files, you can access Grafana at:
