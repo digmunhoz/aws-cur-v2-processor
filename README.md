@@ -80,4 +80,44 @@ Use the following credentials:
 - Username: admin
 - Password: password
 
+
+## AWS Action Required
+
+### Reading Monthly Files
+
+The CUR (Cost and Usage Reports) processor is configured to read only monthly files in Parquet format. It specifically looks for files within the `reports/` directory in the specified S3 bucket. After processing, the files will be renamed with the `.processed` extension.
+
+### Configuring CUR v2 in Parquet on AWS
+
+To enable Cost and Usage Report (CUR) v2 in Parquet format and configure the data export to an S3 bucket, follow these steps:
+
+1. **Access the AWS Console**:
+   - Log in to your AWS account.
+   - Navigate to the **Billing and Cost Management** service.
+
+2. **Create a Cost and Usage Report**:
+   - In the navigation pane, click on **Data Exports**.
+   - Click the **Create** button and choose **Standard data export**
+
+3. **Configure the Report**:
+   - Name your report, for example, `monthly-cost-usage-report`.
+   - Check the **Include resource IDs** option to get detailed information.
+   - On **Time granularity**, select **Monthly**
+   - On **Format** use **Parquet - Parquet**
+
+4. **Configure Report Delivery**:
+   - Select an existing S3 bucket or create a new bucket where the report will be stored.
+   - Ensure the directory structure in the S3 bucket is set to `reports/` for the data export configuration.
+   - Click **Next**.
+
+5. **Set Report Path**:
+   - Set the S3 report path prefix to `reports/`.
+   - Ensure the path is correctly set to store reports in the desired directory.
+
+6. **Review and Complete**:
+   - Review your settings.
+   - Click **Save and complete** to finish the setup.
+
+Once the CUR is configured and active, the processor will read the monthly Parquet files from the `reports/` directory in the S3 bucket for processing.
+
 Follow these instructions to set up, run, and manage the AWS Cur V2 Processor. Ensure your environment meets the prerequisites and that you follow the steps in the correct order.
