@@ -22,7 +22,7 @@ class S3ReaderAdapter(ParquetReader):
 
     def list_files(self, bucket_name):
         paginator = self.s3_client.get_paginator('list_objects_v2')
-        page_iterator = paginator.paginate(Bucket=bucket_name)
+        page_iterator = paginator.paginate(Bucket=bucket_name, Prefix='reports/monthly-reports/')
 
         parquet_files = []
         for page in page_iterator:
