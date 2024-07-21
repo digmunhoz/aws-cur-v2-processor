@@ -32,14 +32,7 @@ process_parquet_files = ProcessParquetFile(
 
 def run():
     logging.info("Starting CUR V2 Processor")
-
-    if Settings.STORAGE_TYPE == "S3":
-        bucket_name = Settings.AWS_BUCKET_NAME
-        process_parquet_files.execute(bucket_name)
-    else:
-        local_directory_path = "/tmp/parquet_files"
-        process_parquet_files.execute(local_directory_path)
-
+    process_parquet_files.execute(Settings.SOURCE_FILE)
     logging.info("Stopping CUR V2 Processor")
 
 

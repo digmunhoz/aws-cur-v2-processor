@@ -12,3 +12,8 @@ class Settings:
     AWS_REGION = config("AWS_REGION", default="us-east-1")
     AWS_BUCKET_NAME = config("AWS_BUCKET_NAME", default="")
     REPROCESS = config("REPROCESS", default=False, cast=config.boolean)
+
+    if STORAGE_TYPE == "S3":
+        SOURCE_FILE = AWS_BUCKET_NAME
+    else:
+        SOURCE_FILE = "/tmp/parquet_files"
