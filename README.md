@@ -60,8 +60,9 @@ Place your .parquet files in the parquet_files directory. After processing, the 
 
 | Variable Name          | Type    | Default Value | Meaning                                        |
 |------------------------|---------|---------------|------------------------------------------------|
-| `ELASTICSEARCH_HOST`   | String  | `localhost`   | The host address of the Elasticsearch server   |
-| `ELASTICSEARCH_PORT`   | Integer | `9200`        | The port number of the Elasticsearch server    |
+| `OUTPUT_ADAPTER`       | String  | `opensearch`  | Where data will be saved after being processed. `opensearch` or `elasticsearch` |
+| `OUTPUT_ADAPTER_HOST`  | String  | `localhost`   | The host address of the Elasticsearch server   |
+| `OUTPUT_ADAPTER_PORT`  | Integer | `9200`        | The port number of the Elasticsearch server    |
 | `FILE_THREADS`         | Integer | 2             | How many parquet files will be processed at same time |
 | `WORKER_THREADS`       | Integer | 2             | How many workers will be used on elasticsearch bulk insert |
 | `STORAGE_TYPE`         | String  | `LOCAL`       | Data source to find parquet files. `LOCAL` or `S3` |

@@ -5,51 +5,45 @@ from config.settings import Settings
 class ProcessParquetFile:
     def __init__(
         self,
-        local_reader,
-        s3_reader,
+        input_reader,
         data_transformer,
         data_validator,
-        elasticsearch_writer,
+        database_writer,
         file_manager,
         storage_type,
     ):
-        self.local_reader = local_reader
-        self.s3_reader = s3_reader
+        self.input_reader = input_reader
         self.data_transformer = data_transformer
         self.data_validator = data_validator
-        self.elasticsearch_writer = elasticsearch_writer
+        self.database_writer = database_writer
         self.file_manager = file_manager
         self.storage_type = storage_type
 
     def execute(self, path_or_bucket):
 
-        if self.storage_type == "S3":
-            files = self.s3_reader.list_files(path_or_bucket)
+        try:
+            files = self.input_reader.list_files(path_or_bucket)
             for file in files:
-                logging.info(f"Reading file: s3://{path_or_bucket}/{file} from storage '{self.storage_type}'")
-                data = self.s3_reader.read(path_or_bucket, file)
-                self._process_data(data, file, bucket_name=path_or_bucket)
-        else:
-            files = self.local_reader.list_files(path_or_bucket)
-            for file in files:
-                logging.info(f"Reading file: {file} from storage '{self.storage_type}'")
-                data = self.local_reader.read(file)
+                data = self.input_reader.read(file)
                 self._process_data(data, file)
+        except Exception as e:
+            logging.error(e)
+            raise
 
-    def _process_data(self, data, source, bucket_name=None):
+    def _process_data(self, data, file):
+
         if not self.data_validator.validate(data):
             raise ValueError("Invalid data")
 
-        logging.info(f"Transforming file: {source}")
+        logging.info(f"Transforming file: {file}")
         transformed_data = self.data_transformer.transform(data)
 
-        logging.info(f"Writing file: {source} into elasticsearch")
-        self.elasticsearch_writer.write(transformed_data)
+        logging.info(f"Writing file: {file} into elasticsearch")
+        self.database_writer.write(transformed_data)
 
         if not Settings.REPROCESS:
-            logging.info(f"Renaming file {source}")
-            processed_file_path = source + ".processed"
-            self.file_manager.rename(source, processed_file_path, self.storage_type, bucket_name)
+            suffix = ".processed"
+            self.file_manager.rename(file, suffix, self.storage_type)
 
 
 class ValidateData:

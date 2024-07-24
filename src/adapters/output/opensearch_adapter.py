@@ -1,14 +1,17 @@
 from config.logging import logging
 
-from elasticsearch import Elasticsearch
-from elasticsearch import helpers
+from opensearchpy import OpenSearch, RequestsHttpConnection
+from opensearchpy import helpers
 from ports.output.database_writer import DatabaseWriter
 from config.settings import Settings
 
-
-class ElasticsearchWriterAdapter(DatabaseWriter):
+class OpensearchWriterAdapter(DatabaseWriter):
     def __init__(self, host="http://localhost", port=9200):
-        self.es = Elasticsearch([f"http://{host}:{port}"])
+        self.es = OpenSearch(
+            hosts=[{"host": host, "port": port}],
+            connection_class=RequestsHttpConnection,
+            pool_maxsize=10,
+        )
 
     def setup_index_template(self):
         settings = {
