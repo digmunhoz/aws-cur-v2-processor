@@ -24,7 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1721527982309,
+  "iteration": 1722859752766,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -50,7 +50,7 @@
               }
             ]
           },
-          "unit": "none"
+          "unit": "short"
         },
         "overrides": [
           {
@@ -152,7 +152,7 @@
               }
             ]
           },
-          "unit": "none"
+          "unit": "short"
         },
         "overrides": []
       },
@@ -351,7 +351,7 @@
               }
             ]
           },
-          "unit": "none"
+          "unit": "short"
         },
         "overrides": []
       },
@@ -449,7 +449,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "short"
         },
         "overrides": []
       },
@@ -545,7 +546,7 @@
               }
             ]
           },
-          "unit": "none"
+          "unit": "short"
         },
         "overrides": [
           {
@@ -747,7 +748,7 @@
               }
             ]
           },
-          "unit": "none"
+          "unit": "short"
         },
         "overrides": [
           {
@@ -852,7 +853,7 @@
               }
             ]
           },
-          "unit": "none"
+          "unit": "short"
         },
         "overrides": []
       },
@@ -952,7 +953,7 @@
               }
             ]
           },
-          "unit": "none"
+          "unit": "short"
         },
         "overrides": []
       },
@@ -2563,7 +2564,7 @@
                   }
                 ]
               },
-              "unit": "none"
+              "unit": "short"
             },
             "overrides": [
               {
@@ -2730,8 +2731,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -2885,8 +2885,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -3250,9 +3249,14 @@
             "selected": false,
             "text": "AmazonAthena",
             "value": "AmazonAthena"
+          },
+          {
+            "selected": false,
+            "text": "AmazonCognito",
+            "value": "AmazonCognito"
           }
         ],
-        "query": "AmazonEC2, ComputeSavingsPlans, AmazonRDS, AmazonS3, AWSELB, AmazonVPC, AmazonCloudFront, AmazonECR, AmazonEKS, AmazonRoute53, AmazonCloudWatch, AWSSecretsManager, AWSLambda, AWSQueueService, AmazonSNS, AWSBackup, AmazonElastiCache, AmazonGuardDuty, AmazonAthena",
+        "query": "AmazonEC2, ComputeSavingsPlans, AmazonRDS, AmazonS3, AWSELB, AmazonVPC, AmazonCloudFront, AmazonECR, AmazonEKS, AmazonRoute53, AmazonCloudWatch, AWSSecretsManager, AWSLambda, AWSQueueService, AmazonSNS, AWSBackup, AmazonElastiCache, AmazonGuardDuty, AmazonAthena, AmazonCognito",
         "queryValue": "",
         "skipUrlSync": false,
         "type": "custom"
@@ -3364,9 +3368,14 @@
             "selected": false,
             "text": "AmazonAthena",
             "value": "AmazonAthena"
+          },
+          {
+            "selected": false,
+            "text": "AmazonCognito",
+            "value": "AmazonCognito"
           }
         ],
-        "query": "AmazonEC2, AmazonRDS, AmazonS3, AWSELB, AmazonVPC, AmazonCloudFront, AmazonECR, AmazonEKS, AmazonRoute53, AmazonCloudWatch, AWSSecretsManager, AWSLambda, AWSQueueService, AmazonSNS, AWSBackup, AmazonElastiCache, AmazonGuardDuty, AmazonAthena",
+        "query": "AmazonEC2, AmazonRDS, AmazonS3, AWSELB, AmazonVPC, AmazonCloudFront, AmazonECR, AmazonEKS, AmazonRoute53, AmazonCloudWatch, AWSSecretsManager, AWSLambda, AWSQueueService, AmazonSNS, AWSBackup, AmazonElastiCache, AmazonGuardDuty, AmazonAthena, AmazonCognito",
         "queryValue": "",
         "skipUrlSync": false,
         "type": "custom"
@@ -3403,8 +3412,8 @@
     ]
   },
   "time": {
-    "from": "now/M",
-    "to": "now"
+    "from": "now-1M/M",
+    "to": "now-1M/M"
   },
   "timepicker": {
     "refresh_intervals": [
