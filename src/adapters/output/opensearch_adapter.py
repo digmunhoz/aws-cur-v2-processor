@@ -5,6 +5,7 @@ from opensearchpy import helpers
 from ports.output.database_writer import DatabaseWriter
 from config.settings import Settings
 
+
 class OpensearchWriterAdapter(DatabaseWriter):
     def __init__(self, host="http://localhost", port=9200):
         self.es = OpenSearch(
@@ -22,7 +23,9 @@ class OpensearchWriterAdapter(DatabaseWriter):
                     "index.number_of_replicas": "0",
                     "index.refresh_interval": "1m",
                 },
-                "mappings": {"properties": {}},
+                "mappings": {
+                    "properties": {},
+                },
             },
             "index_patterns": ["aws-cur-v2*"],
             "composed_of": [],
@@ -42,13 +45,16 @@ class OpensearchWriterAdapter(DatabaseWriter):
                 self.es,
                 data,
                 thread_count=Settings.WORKER_THREADS,
-                raise_on_error=True,
-                raise_on_exception=True,
+                raise_on_error=False,
+                raise_on_exception=False,
                 chunk_size=200,
                 queue_size=8,
             ):
                 if not success:
-                    logging.error(info)
+                    logging.error(f"Failed to insert document: {info}")
+                else:
+                    logging.debug(f"Successfully inserted document: {info}")
+            logging.info("Bulk insert operation completed")
         except Exception as e:
-            logging.error(e)
+            logging.error(f"Exception during bulk insert operation: {e}", exc_info=True)
             raise

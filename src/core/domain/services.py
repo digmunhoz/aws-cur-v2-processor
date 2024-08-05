@@ -6,18 +6,23 @@ class DataValidator:
         return True
 
 class DataTransformer:
+    def clean_item(self, item):
+        # Replaces NaN to None
+        return {k: (None if (isinstance(v, float) and v != v) else v) for k, v in item.items()}
+
     def transform(self, data):
 
         bulk_data = []
         index_suffix = self.gen_index_suffix(data[0])
         index_name = f"aws-cur-v2_{index_suffix}"
         for document in data:
-            doc_hash_id = self.gen_hash(document)
+            cleaned_document = self.clean_item(document)
+            doc_hash_id = self.gen_hash(cleaned_document)
             action = {
                 "_op_type": "index",
                 "_index": index_name,
                 "_id": doc_hash_id,
-                "_source": document,
+                "_source": cleaned_document,
             }
             bulk_data.append(action)
         return bulk_data

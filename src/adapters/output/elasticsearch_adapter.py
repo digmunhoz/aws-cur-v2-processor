@@ -39,13 +39,16 @@ class ElasticsearchWriterAdapter(DatabaseWriter):
                 self.es,
                 data,
                 thread_count=Settings.WORKER_THREADS,
-                raise_on_error=True,
-                raise_on_exception=True,
+                raise_on_error=False,
+                raise_on_exception=False,
                 chunk_size=200,
                 queue_size=8,
             ):
                 if not success:
-                    logging.error(info)
+                    logging.error(f"Failed to insert document: {info}")
+                else:
+                    logging.debug(f"Successfully inserted document: {info}")
+            logging.info("Bulk insert operation completed")
         except Exception as e:
-            logging.error(e)
+            logging.error(f"Exception during bulk insert operation: {e}", exc_info=True)
             raise
