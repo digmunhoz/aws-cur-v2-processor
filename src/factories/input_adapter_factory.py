@@ -12,6 +12,7 @@ class InputAdapterFactory:
                 Settings.AWS_ACCESS_KEY_ID,
                 Settings.AWS_SECRET_ACCESS_KEY,
                 Settings.AWS_REGION,
+                Settings.AWS_SESSION_TOKEN,
             )
         elif Settings.STORAGE_TYPE == "LOCAL":
             return LocalReaderAdapter()

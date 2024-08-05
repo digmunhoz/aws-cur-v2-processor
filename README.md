@@ -68,6 +68,7 @@ Place your .parquet files in the parquet_files directory. After processing, the 
 | `STORAGE_TYPE`         | String  | `LOCAL`       | Data source to find parquet files. `LOCAL` or `S3` |
 | `AWS_ACCESS_KEY_ID`    | String  |               | AWS Access Key to connect on S3 when using `STORAGE_TYPE` as `S3` |
 | `AWS_SECRET_ACCESS_KEY`| String  |               | AWS Access Key ID to connect on S3 when using `STORAGE_TYPE` as `S3` |
+| `AWS_SESSION_TOKEN`    | String  |               | AWS Session Token if necessary                 |
 | `AWS_REGION`           | String  | `us-east-1`   | AWS region where S3 Bucket was created         |
 | `AWS_BUCKET_NAME`      | String  |               | AWS S3 Bucket where parquet files are created  |
 | `REPROCESS`            | Bool    | `False`       | If `True`, all processed file will be reprocessed |

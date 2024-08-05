@@ -8,12 +8,13 @@ from ports.input.parquet_reader import ParquetReader
 
 
 class S3ReaderAdapter(ParquetReader):
-    def __init__(self, aws_access_key_id, aws_secret_access_key, region_name):
+    def __init__(self, aws_access_key_id, aws_secret_access_key, region_name, aws_session_token):
         self.s3_client = boto3.client(
             "s3",
             aws_access_key_id=aws_access_key_id,
             aws_secret_access_key=aws_secret_access_key,
             region_name=region_name,
+            aws_session_token=aws_session_token,
         )
 
     def read(self, file):

@@ -11,6 +11,7 @@ class Settings:
     AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID", default=None)
     AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY", default=None)
     AWS_REGION = config("AWS_REGION", default="us-east-1")
+    AWS_SESSION_TOKEN = config("AWS_SESSION_TOKEN", default=None)
     AWS_BUCKET_NAME = config("AWS_BUCKET_NAME", default="")
     REPROCESS = config("REPROCESS", default=False, cast=config.boolean)
 
