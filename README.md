@@ -71,6 +71,7 @@ Place your .parquet files in the parquet_files directory. After processing, the 
 | `AWS_SESSION_TOKEN`    | String  |               | AWS Session Token if necessary                 |
 | `AWS_REGION`           | String  | `us-east-1`   | AWS region where S3 Bucket was created         |
 | `AWS_BUCKET_NAME`      | String  |               | AWS S3 Bucket where parquet files are created  |
+| `AWS_BUCKET_PREFIX`    | String  |               | AWS S3 Bucket prefix directory where parquet files are created  |
 | `REPROCESS`            | Bool    | `False`       | If `True`, all processed file will be reprocessed |
 
 ## Accessing Grafana
@@ -88,7 +89,7 @@ Use the following credentials:
 
 ### Reading Monthly Files
 
-The CUR (Cost and Usage Reports) processor is configured to read only monthly files in Parquet format. It specifically looks for files within the `reports/` directory in the specified S3 bucket. After processing, the files will be renamed with the `.processed` extension.
+The CUR (Cost and Usage Reports) processor is configured to read only files under `AWS_BUCKET_PREFIX` path in Parquet format. It specifically looks for files within the `AWS_BUCKET_PREFIX` directory in the specified S3 bucket. After processing, the files will be renamed with the `.processed` extension.
 
 ### Configuring CUR v2 in Parquet on AWS
 
