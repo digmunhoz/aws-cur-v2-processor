@@ -27,10 +27,10 @@ class S3ReaderAdapter(ParquetReader):
 
         return df.to_dict(orient="records")
 
-    def list_files(self, bucket_name):
+    def list_files(self, bucket_name, prefix=Settings.AWS_BUCKET_PREFIX):
         paginator = self.s3_client.get_paginator("list_objects_v2")
         page_iterator = paginator.paginate(
-            Bucket=bucket_name, Prefix="reports/"
+            Bucket=bucket_name, Prefix=prefix
         )
 
         if Settings.REPROCESS:
