@@ -8,7 +8,9 @@ from config.settings import Settings
 
 class ElasticsearchWriterAdapter(DatabaseWriter):
     def __init__(self, host="http://localhost", port=9200):
-        self.es = Elasticsearch([f"http://{host}:{port}"])
+        self.es = Elasticsearch(
+            [f"http://{host}:{port}"], timeout=30, retry_on_timeout=True, max_retries=3
+        )
 
     def setup_index_template(self):
         settings = {
@@ -19,7 +21,9 @@ class ElasticsearchWriterAdapter(DatabaseWriter):
                     "index.number_of_replicas": "0",
                     "index.refresh_interval": "1m",
                 },
-                "mappings": {"properties": {}},
+                "mappings": {
+                    "properties": {}
+                }
             },
             "index_patterns": ["aws-cur-v2*"],
             "composed_of": [],

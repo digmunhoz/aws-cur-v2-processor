@@ -13,6 +13,7 @@ class Settings:
     AWS_REGION = config("AWS_REGION", default="us-east-1")
     AWS_SESSION_TOKEN = config("AWS_SESSION_TOKEN", default=None)
     AWS_BUCKET_NAME = config("AWS_BUCKET_NAME", default="")
+    AWS_BUCKET_PREFIX = config("AWS_BUCKET_PREFIX", default="")
     REPROCESS = config("REPROCESS", default=False, cast=config.boolean)
 
     if STORAGE_TYPE == "S3":

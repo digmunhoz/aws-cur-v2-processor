@@ -1,5 +1,5 @@
 start:
-	@docker compose -f docker/docker-compose.yaml up -d opensearch opensearch-dashboards grafana
+	@docker compose -f docker/docker-compose.yaml up -d elasticsearch kibana grafana
 
 build:
 	@docker compose -f docker/docker-compose.yaml build

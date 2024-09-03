@@ -11,6 +11,7 @@ class FileManagerAdapter(FileManager):
         self,
         aws_access_key_id=Settings.AWS_ACCESS_KEY_ID,
         aws_secret_access_key=Settings.AWS_SECRET_ACCESS_KEY,
+        aws_session_token=Settings.AWS_SESSION_TOKEN,
         region_name=Settings.AWS_REGION,
     ):
         if aws_access_key_id and aws_secret_access_key and region_name:
@@ -18,6 +19,7 @@ class FileManagerAdapter(FileManager):
                 "s3",
                 aws_access_key_id=aws_access_key_id,
                 aws_secret_access_key=aws_secret_access_key,
+                aws_session_token=aws_session_token,
                 region_name=region_name,
             )
         else:
