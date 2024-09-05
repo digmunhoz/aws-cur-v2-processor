@@ -1372,7 +1372,7 @@
       "type": "stat"
     },
     {
-      "collapsed": false,
+      "collapsed": true,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1380,1412 +1380,1413 @@
         "y": 13
       },
       "id": 18,
-      "panels": [],
+      "panels": [
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "P31C819B24CF3C3C7"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "bars",
+                "fillOpacity": 90,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "normal"
+                },
+                "thresholdsStyle": {
+                  "mode": "line+area"
+                }
+              },
+              "decimals": 1,
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 0
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Total"
+                },
+                "properties": [
+                  {
+                    "id": "custom.drawStyle",
+                    "value": "bars"
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 2
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "dash": [
+                        10,
+                        10
+                      ],
+                      "fill": "dash"
+                    }
+                  },
+                  {
+                    "id": "custom.hideFrom",
+                    "value": {
+                      "legend": true,
+                      "tooltip": false,
+                      "viz": false
+                    }
+                  },
+                  {
+                    "id": "custom.stacking",
+                    "value": {
+                      "group": "A",
+                      "mode": "none"
+                    }
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "red",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "(Credit|*Discount)"
+                },
+                "properties": [
+                  {
+                    "id": "custom.stacking",
+                    "value": {
+                      "group": "A",
+                      "mode": "none"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 14
+          },
+          "hideTimeOverride": false,
+          "id": 22,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true,
+              "sortBy": "Last *",
+              "sortDesc": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            }
+          },
+          "targets": [
+            {
+              "alias": "",
+              "bucketAggs": [
+                {
+                  "field": "line_item_line_item_type.keyword",
+                  "id": "3",
+                  "settings": {
+                    "min_doc_count": "1",
+                    "order": "desc",
+                    "orderBy": "1",
+                    "size": "0"
+                  },
+                  "type": "terms"
+                },
+                {
+                  "field": "line_item_usage_start_date",
+                  "id": "2",
+                  "settings": {
+                    "interval": "$interval",
+                    "min_doc_count": "0"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "P31C819B24CF3C3C7"
+              },
+              "format": "table",
+              "luceneQueryType": "Metric",
+              "metrics": [
+                {
+                  "field": "line_item_unblended_cost",
+                  "id": "1",
+                  "type": "sum"
+                }
+              ],
+              "query": "line_item_usage_account_id.keyword:$account_id AND NOT \nline_item_product_code.keyword:AWSSupportEnterprise AND NOT\nbill_billing_entity.keyword:\"AWS Marketplace\" AND NOT\n(\nline_item_line_item_type.keyword:DiscountedUsage OR \nline_item_line_item_type.keyword:SavingsPlanNegation OR\nline_item_line_item_type.keyword:SavingsPlanCoveredUsage OR\nline_item_line_item_type.keyword:Tax\n)",
+              "queryType": "lucene",
+              "refId": "A",
+              "timeField": "line_item_usage_start_date"
+            },
+            {
+              "alias": "Enterprise Support",
+              "bucketAggs": [
+                {
+                  "field": "line_item_usage_start_date",
+                  "id": "2",
+                  "settings": {
+                    "interval": "$interval",
+                    "min_doc_count": "0"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "P31C819B24CF3C3C7"
+              },
+              "format": "table",
+              "hide": false,
+              "luceneQueryType": "Metric",
+              "metrics": [
+                {
+                  "field": "line_item_net_unblended_cost",
+                  "id": "1",
+                  "type": "sum"
+                }
+              ],
+              "query": "line_item_usage_account_id.keyword:$account_id AND\nline_item_product_code.keyword:AWSSupportEnterprise AND NOT line_item_line_item_type.keyword: Tax",
+              "queryType": "lucene",
+              "refId": "B",
+              "timeField": "line_item_usage_start_date"
+            },
+            {
+              "alias": "Tax",
+              "bucketAggs": [
+                {
+                  "field": "line_item_usage_start_date",
+                  "id": "2",
+                  "settings": {
+                    "interval": "$interval",
+                    "min_doc_count": "0"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "P31C819B24CF3C3C7"
+              },
+              "format": "table",
+              "hide": false,
+              "luceneQueryType": "Metric",
+              "metrics": [
+                {
+                  "field": "line_item_net_unblended_cost",
+                  "id": "1",
+                  "type": "sum"
+                }
+              ],
+              "query": "line_item_usage_account_id.keyword:$account_id AND\nline_item_line_item_type.keyword: Tax",
+              "queryType": "lucene",
+              "refId": "C",
+              "timeField": "line_item_usage_start_date"
+            },
+            {
+              "alias": "Marketplace",
+              "bucketAggs": [
+                {
+                  "field": "line_item_usage_start_date",
+                  "id": "2",
+                  "settings": {
+                    "interval": "$interval",
+                    "min_doc_count": "0"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "P31C819B24CF3C3C7"
+              },
+              "format": "table",
+              "hide": false,
+              "luceneQueryType": "Metric",
+              "metrics": [
+                {
+                  "field": "line_item_net_unblended_cost",
+                  "id": "1",
+                  "type": "sum"
+                }
+              ],
+              "query": "bill_billing_entity.keyword:\"AWS Marketplace\"",
+              "queryType": "lucene",
+              "refId": "D",
+              "timeField": "line_item_usage_start_date"
+            }
+          ],
+          "title": "Total Cost by Charge Type",
+          "transformations": [
+            {
+              "id": "calculateField",
+              "options": {
+                "alias": "Total",
+                "mode": "reduceRow",
+                "reduce": {
+                  "include": [],
+                  "reducer": "sum"
+                }
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {},
+                "includeByName": {},
+                "indexByName": {},
+                "renameByName": {
+                  "EdpDiscount": "EDP Discount",
+                  "Fee": "",
+                  "RIFee": "Reservations",
+                  "SavingsPlanRecurringFee": "Savings Plan",
+                  "Tax": "",
+                  "Total": "",
+                  "Usage": ""
+                }
+              }
+            }
+          ],
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "P31C819B24CF3C3C7"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "bars",
+                "fillOpacity": 90,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "normal"
+                },
+                "thresholdsStyle": {
+                  "mode": "line+area"
+                }
+              },
+              "decimals": 1,
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 0
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Total"
+                },
+                "properties": [
+                  {
+                    "id": "custom.drawStyle",
+                    "value": "line"
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 2
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "fill": "solid"
+                    }
+                  },
+                  {
+                    "id": "custom.hideFrom",
+                    "value": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    }
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "red",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 14
+          },
+          "hideTimeOverride": false,
+          "id": 485,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true,
+              "sortBy": "Last *",
+              "sortDesc": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            }
+          },
+          "targets": [
+            {
+              "alias": "",
+              "bucketAggs": [
+                {
+                  "field": "line_item_legal_entity.keyword",
+                  "id": "3",
+                  "settings": {
+                    "min_doc_count": "1",
+                    "order": "desc",
+                    "orderBy": "1",
+                    "size": "0"
+                  },
+                  "type": "terms"
+                },
+                {
+                  "field": "line_item_usage_start_date",
+                  "id": "2",
+                  "settings": {
+                    "interval": "$interval",
+                    "min_doc_count": "0"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "P31C819B24CF3C3C7"
+              },
+              "format": "table",
+              "luceneQueryType": "Metric",
+              "metrics": [
+                {
+                  "field": "line_item_unblended_cost",
+                  "id": "1",
+                  "type": "sum"
+                }
+              ],
+              "query": "line_item_usage_account_id.keyword:$account_id AND\nbill_billing_entity.keyword:\"AWS Marketplace\"",
+              "queryType": "lucene",
+              "refId": "A",
+              "timeField": "line_item_usage_start_date"
+            }
+          ],
+          "title": "Marketplace Cost by Entity",
+          "transformations": [
+            {
+              "id": "calculateField",
+              "options": {
+                "alias": "Total",
+                "mode": "reduceRow",
+                "reduce": {
+                  "include": [],
+                  "reducer": "sum"
+                }
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {},
+                "includeByName": {},
+                "indexByName": {},
+                "renameByName": {
+                  "EdpDiscount": "EDP Discount",
+                  "Fee": "",
+                  "RIFee": "Reservations",
+                  "SavingsPlanRecurringFee": "Savings Plan",
+                  "Tax": "",
+                  "Total": "",
+                  "Usage": ""
+                }
+              }
+            }
+          ],
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "P31C819B24CF3C3C7"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "bars",
+                "fillOpacity": 90,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "normal"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "decimals": 1,
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Total"
+                },
+                "properties": [
+                  {
+                    "id": "custom.drawStyle",
+                    "value": "line"
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 2
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "fill": "solid"
+                    }
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "dark-red",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.hideFrom",
+                    "value": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/.*MoM Change.*/"
+                },
+                "properties": [
+                  {
+                    "id": "custom.drawStyle",
+                    "value": "line"
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 2
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "custom.axisPlacement",
+                    "value": "right"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 15,
+            "x": 0,
+            "y": 21
+          },
+          "hideTimeOverride": false,
+          "id": 484,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true,
+              "sortBy": "Last *",
+              "sortDesc": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            }
+          },
+          "targets": [
+            {
+              "alias": "",
+              "bucketAggs": [
+                {
+                  "field": "line_item_usage_account_name.keyword",
+                  "id": "3",
+                  "settings": {
+                    "min_doc_count": "1",
+                    "order": "desc",
+                    "orderBy": "1",
+                    "size": "0"
+                  },
+                  "type": "terms"
+                },
+                {
+                  "field": "line_item_usage_start_date",
+                  "id": "2",
+                  "settings": {
+                    "interval": "$interval",
+                    "min_doc_count": "0"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "P31C819B24CF3C3C7"
+              },
+              "format": "table",
+              "luceneQueryType": "Metric",
+              "metrics": [
+                {
+                  "field": "line_item_net_unblended_cost",
+                  "id": "1",
+                  "type": "sum"
+                }
+              ],
+              "query": "line_item_usage_account_id.keyword:$account_id",
+              "queryType": "lucene",
+              "refId": "A",
+              "timeField": "line_item_usage_start_date"
+            },
+            {
+              "alias": "Total",
+              "bucketAggs": [
+                {
+                  "field": "line_item_usage_start_date",
+                  "id": "2",
+                  "settings": {
+                    "interval": "$interval",
+                    "min_doc_count": "0"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "P31C819B24CF3C3C7"
+              },
+              "format": "table",
+              "hide": false,
+              "luceneQueryType": "Metric",
+              "metrics": [
+                {
+                  "field": "line_item_net_unblended_cost",
+                  "id": "1",
+                  "settings": {
+                    "script": "_value + 0.00001"
+                  },
+                  "type": "sum"
+                }
+              ],
+              "query": "line_item_usage_account_id.keyword:$account_id",
+              "queryType": "lucene",
+              "refId": "B",
+              "timeField": "line_item_usage_start_date"
+            },
+            {
+              "alias": "MoM Change",
+              "bucketAggs": [
+                {
+                  "field": "line_item_usage_start_date",
+                  "id": "2",
+                  "settings": {
+                    "interval": "$interval",
+                    "min_doc_count": "0"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "P31C819B24CF3C3C7"
+              },
+              "format": "table",
+              "hide": false,
+              "luceneQueryType": "Metric",
+              "metrics": [
+                {
+                  "field": "line_item_net_unblended_cost",
+                  "hide": true,
+                  "id": "1",
+                  "type": "sum"
+                },
+                {
+                  "field": "1",
+                  "id": "3",
+                  "pipelineAgg": "1",
+                  "type": "derivative"
+                }
+              ],
+              "query": "line_item_usage_account_id.keyword:$account_id",
+              "queryType": "lucene",
+              "refId": "C",
+              "timeField": "line_item_usage_start_date"
+            }
+          ],
+          "title": "Total Costs by Account",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "P31C819B24CF3C3C7"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "axisSoftMin": 0,
+                "fillOpacity": 80,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineWidth": 1,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "max": 1,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percentunit"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 9,
+            "x": 15,
+            "y": 21
+          },
+          "id": 230,
+          "options": {
+            "barRadius": 0,
+            "barWidth": 0.97,
+            "fullHighlight": false,
+            "groupWidth": 0.7,
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "orientation": "auto",
+            "showValue": "auto",
+            "stacking": "percent",
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            },
+            "xTickLabelRotation": 0,
+            "xTickLabelSpacing": 100
+          },
+          "pluginVersion": "8.5.21",
+          "targets": [
+            {
+              "alias": "",
+              "bucketAggs": [
+                {
+                  "field": "pricing_term.keyword",
+                  "id": "3",
+                  "settings": {
+                    "min_doc_count": "0",
+                    "order": "desc",
+                    "orderBy": "1",
+                    "size": "0"
+                  },
+                  "type": "terms"
+                },
+                {
+                  "field": "line_item_usage_start_date",
+                  "id": "2",
+                  "settings": {
+                    "interval": "1M",
+                    "min_doc_count": "0"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "P31C819B24CF3C3C7"
+              },
+              "format": "table",
+              "luceneQueryType": "Metric",
+              "metrics": [
+                {
+                  "field": "line_item_unblended_cost",
+                  "id": "1",
+                  "type": "sum"
+                }
+              ],
+              "query": "line_item_usage_account_id.keyword:$account_id AND \n(line_item_product_code.keyword:AmazonEC2 OR\n line_item_product_code.keyword:ComputeSavingsPlans)",
+              "queryType": "lucene",
+              "refId": "A",
+              "timeField": "line_item_usage_start_date"
+            }
+          ],
+          "title": "Pricing Term - EC2",
+          "transformations": [
+            {
+              "id": "calculateField",
+              "options": {
+                "alias": "Total",
+                "mode": "reduceRow",
+                "reduce": {
+                  "reducer": "sum"
+                }
+              }
+            },
+            {
+              "id": "calculateField",
+              "options": {
+                "alias": "OnDemand Percent",
+                "binary": {
+                  "left": "OnDemand",
+                  "operator": "/",
+                  "reducer": "sum",
+                  "right": "Total"
+                },
+                "mode": "binary",
+                "reduce": {
+                  "reducer": "sum"
+                }
+              }
+            },
+            {
+              "id": "calculateField",
+              "options": {
+                "alias": "Reserved Percent",
+                "binary": {
+                  "left": "Reserved",
+                  "operator": "/",
+                  "reducer": "sum",
+                  "right": "Total"
+                },
+                "mode": "binary",
+                "reduce": {
+                  "reducer": "sum"
+                }
+              }
+            },
+            {
+              "id": "calculateField",
+              "options": {
+                "alias": "Spot Percent",
+                "binary": {
+                  "left": "Spot",
+                  "operator": "/",
+                  "reducer": "sum",
+                  "right": "Total"
+                },
+                "mode": "binary",
+                "reduce": {
+                  "reducer": "sum"
+                }
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "OnDemand": true,
+                  "Reserved": true,
+                  "Spot": true,
+                  "Total": true
+                },
+                "indexByName": {},
+                "renameByName": {
+                  "OnDemand Percent": "On Demand",
+                  "Reserved Percent": "Reserved",
+                  "Spot Percent": "Spot"
+                }
+              }
+            }
+          ],
+          "type": "barchart"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "P31C819B24CF3C3C7"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "bars",
+                "fillOpacity": 90,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "normal"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "decimals": 1,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Total"
+                },
+                "properties": [
+                  {
+                    "id": "custom.drawStyle",
+                    "value": "line"
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 2
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "fill": "solid"
+                    }
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "dark-red",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.hideFrom",
+                    "value": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 15,
+            "x": 0,
+            "y": 28
+          },
+          "id": 21,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true,
+              "sortBy": "Last *",
+              "sortDesc": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            }
+          },
+          "targets": [
+            {
+              "alias": "",
+              "bucketAggs": [
+                {
+                  "field": "line_item_product_code.keyword",
+                  "id": "3",
+                  "settings": {
+                    "min_doc_count": "1",
+                    "order": "desc",
+                    "orderBy": "1",
+                    "size": "0"
+                  },
+                  "type": "terms"
+                },
+                {
+                  "field": "line_item_usage_start_date",
+                  "id": "2",
+                  "settings": {
+                    "interval": "$interval",
+                    "min_doc_count": "0"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "P31C819B24CF3C3C7"
+              },
+              "format": "table",
+              "luceneQueryType": "Metric",
+              "metrics": [
+                {
+                  "field": "line_item_unblended_cost",
+                  "id": "1",
+                  "type": "sum"
+                }
+              ],
+              "query": "line_item_usage_account_id.keyword:$account_id AND NOT bill_billing_entity.keyword:\"AWS Marketplace\"",
+              "queryType": "lucene",
+              "refId": "A",
+              "timeField": "line_item_usage_start_date"
+            }
+          ],
+          "title": "Total Costs by Service",
+          "transformations": [
+            {
+              "id": "calculateField",
+              "options": {
+                "alias": "Total",
+                "mode": "reduceRow",
+                "reduce": {
+                  "reducer": "sum"
+                },
+                "replaceFields": false
+              }
+            }
+          ],
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "P31C819B24CF3C3C7"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "axisSoftMin": 0,
+                "fillOpacity": 80,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineWidth": 1,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "max": 1,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percentunit"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 9,
+            "x": 15,
+            "y": 28
+          },
+          "id": 249,
+          "options": {
+            "barRadius": 0,
+            "barWidth": 0.97,
+            "fullHighlight": false,
+            "groupWidth": 0.7,
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "orientation": "auto",
+            "showValue": "auto",
+            "stacking": "percent",
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            },
+            "xTickLabelRotation": 0,
+            "xTickLabelSpacing": 100
+          },
+          "pluginVersion": "8.5.21",
+          "targets": [
+            {
+              "alias": "",
+              "bucketAggs": [
+                {
+                  "field": "pricing_term.keyword",
+                  "id": "3",
+                  "settings": {
+                    "min_doc_count": "0",
+                    "order": "desc",
+                    "orderBy": "1",
+                    "size": "0"
+                  },
+                  "type": "terms"
+                },
+                {
+                  "field": "line_item_usage_start_date",
+                  "id": "2",
+                  "settings": {
+                    "interval": "1M",
+                    "min_doc_count": "0"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "P31C819B24CF3C3C7"
+              },
+              "format": "table",
+              "luceneQueryType": "Metric",
+              "metrics": [
+                {
+                  "field": "line_item_unblended_cost",
+                  "id": "1",
+                  "type": "sum"
+                }
+              ],
+              "query": "line_item_usage_account_id.keyword:$account_id AND \nline_item_product_code.keyword:AmazonRDS",
+              "queryType": "lucene",
+              "refId": "A",
+              "timeField": "line_item_usage_start_date"
+            }
+          ],
+          "title": "Pricing Term - RDS",
+          "transformations": [
+            {
+              "id": "calculateField",
+              "options": {
+                "alias": "Total",
+                "mode": "reduceRow",
+                "reduce": {
+                  "reducer": "sum"
+                }
+              }
+            },
+            {
+              "id": "calculateField",
+              "options": {
+                "alias": "OnDemand Percent",
+                "binary": {
+                  "left": "OnDemand",
+                  "operator": "/",
+                  "reducer": "sum",
+                  "right": "Total"
+                },
+                "mode": "binary",
+                "reduce": {
+                  "reducer": "sum"
+                }
+              }
+            },
+            {
+              "id": "calculateField",
+              "options": {
+                "alias": "Reserved Percent",
+                "binary": {
+                  "left": "Reserved",
+                  "operator": "/",
+                  "reducer": "sum",
+                  "right": "Total"
+                },
+                "mode": "binary",
+                "reduce": {
+                  "reducer": "sum"
+                }
+              }
+            },
+            {
+              "id": "calculateField",
+              "options": {
+                "alias": "Spot Percent",
+                "binary": {
+                  "left": "Spot",
+                  "operator": "/",
+                  "reducer": "sum",
+                  "right": "Total"
+                },
+                "mode": "binary",
+                "reduce": {
+                  "reducer": "sum"
+                }
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "OnDemand": true,
+                  "Reserved": true,
+                  "Spot": true,
+                  "Total": true
+                },
+                "indexByName": {},
+                "renameByName": {
+                  "OnDemand Percent": "On Demand",
+                  "Reserved Percent": "Reserved",
+                  "Spot Percent": "Spot"
+                }
+              }
+            }
+          ],
+          "type": "barchart"
+        }
+      ],
       "title": "Overview History",
       "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "elasticsearch",
-        "uid": "P31C819B24CF3C3C7"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "bars",
-            "fillOpacity": 90,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "normal"
-            },
-            "thresholdsStyle": {
-              "mode": "line+area"
-            }
-          },
-          "decimals": 1,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "green",
-                "value": 0
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Total"
-            },
-            "properties": [
-              {
-                "id": "custom.drawStyle",
-                "value": "bars"
-              },
-              {
-                "id": "custom.lineWidth",
-                "value": 2
-              },
-              {
-                "id": "custom.fillOpacity",
-                "value": 0
-              },
-              {
-                "id": "custom.lineStyle",
-                "value": {
-                  "dash": [
-                    10,
-                    10
-                  ],
-                  "fill": "dash"
-                }
-              },
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": true,
-                  "tooltip": false,
-                  "viz": false
-                }
-              },
-              {
-                "id": "custom.stacking",
-                "value": {
-                  "group": "A",
-                  "mode": "none"
-                }
-              },
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "red",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byRegexp",
-              "options": "(Credit|*Discount)"
-            },
-            "properties": [
-              {
-                "id": "custom.stacking",
-                "value": {
-                  "group": "A",
-                  "mode": "none"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 12,
-        "x": 0,
-        "y": 14
-      },
-      "hideTimeOverride": false,
-      "id": 22,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "displayMode": "table",
-          "placement": "right",
-          "showLegend": true,
-          "sortBy": "Last *",
-          "sortDesc": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      },
-      "targets": [
-        {
-          "alias": "",
-          "bucketAggs": [
-            {
-              "field": "line_item_line_item_type.keyword",
-              "id": "3",
-              "settings": {
-                "min_doc_count": "1",
-                "order": "desc",
-                "orderBy": "1",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "field": "line_item_usage_start_date",
-              "id": "2",
-              "settings": {
-                "interval": "$interval",
-                "min_doc_count": "0"
-              },
-              "type": "date_histogram"
-            }
-          ],
-          "datasource": {
-            "type": "elasticsearch",
-            "uid": "P31C819B24CF3C3C7"
-          },
-          "format": "table",
-          "luceneQueryType": "Metric",
-          "metrics": [
-            {
-              "field": "line_item_unblended_cost",
-              "id": "1",
-              "type": "sum"
-            }
-          ],
-          "query": "line_item_usage_account_id.keyword:$account_id AND NOT \nline_item_product_code.keyword:AWSSupportEnterprise AND NOT\nbill_billing_entity.keyword:\"AWS Marketplace\" AND NOT\n(\nline_item_line_item_type.keyword:DiscountedUsage OR \nline_item_line_item_type.keyword:SavingsPlanNegation OR\nline_item_line_item_type.keyword:SavingsPlanCoveredUsage OR\nline_item_line_item_type.keyword:Tax\n)",
-          "queryType": "lucene",
-          "refId": "A",
-          "timeField": "line_item_usage_start_date"
-        },
-        {
-          "alias": "Enterprise Support",
-          "bucketAggs": [
-            {
-              "field": "line_item_usage_start_date",
-              "id": "2",
-              "settings": {
-                "interval": "$interval",
-                "min_doc_count": "0"
-              },
-              "type": "date_histogram"
-            }
-          ],
-          "datasource": {
-            "type": "elasticsearch",
-            "uid": "P31C819B24CF3C3C7"
-          },
-          "format": "table",
-          "hide": false,
-          "luceneQueryType": "Metric",
-          "metrics": [
-            {
-              "field": "line_item_net_unblended_cost",
-              "id": "1",
-              "type": "sum"
-            }
-          ],
-          "query": "line_item_usage_account_id.keyword:$account_id AND\nline_item_product_code.keyword:AWSSupportEnterprise AND NOT line_item_line_item_type.keyword: Tax",
-          "queryType": "lucene",
-          "refId": "B",
-          "timeField": "line_item_usage_start_date"
-        },
-        {
-          "alias": "Tax",
-          "bucketAggs": [
-            {
-              "field": "line_item_usage_start_date",
-              "id": "2",
-              "settings": {
-                "interval": "$interval",
-                "min_doc_count": "0"
-              },
-              "type": "date_histogram"
-            }
-          ],
-          "datasource": {
-            "type": "elasticsearch",
-            "uid": "P31C819B24CF3C3C7"
-          },
-          "format": "table",
-          "hide": false,
-          "luceneQueryType": "Metric",
-          "metrics": [
-            {
-              "field": "line_item_net_unblended_cost",
-              "id": "1",
-              "type": "sum"
-            }
-          ],
-          "query": "line_item_usage_account_id.keyword:$account_id AND\nline_item_line_item_type.keyword: Tax",
-          "queryType": "lucene",
-          "refId": "C",
-          "timeField": "line_item_usage_start_date"
-        },
-        {
-          "alias": "Marketplace",
-          "bucketAggs": [
-            {
-              "field": "line_item_usage_start_date",
-              "id": "2",
-              "settings": {
-                "interval": "$interval",
-                "min_doc_count": "0"
-              },
-              "type": "date_histogram"
-            }
-          ],
-          "datasource": {
-            "type": "elasticsearch",
-            "uid": "P31C819B24CF3C3C7"
-          },
-          "format": "table",
-          "hide": false,
-          "luceneQueryType": "Metric",
-          "metrics": [
-            {
-              "field": "line_item_net_unblended_cost",
-              "id": "1",
-              "type": "sum"
-            }
-          ],
-          "query": "bill_billing_entity.keyword:\"AWS Marketplace\"",
-          "queryType": "lucene",
-          "refId": "D",
-          "timeField": "line_item_usage_start_date"
-        }
-      ],
-      "title": "Total Cost by Charge Type",
-      "transformations": [
-        {
-          "id": "calculateField",
-          "options": {
-            "alias": "Total",
-            "mode": "reduceRow",
-            "reduce": {
-              "include": [],
-              "reducer": "sum"
-            }
-          }
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {},
-            "includeByName": {},
-            "indexByName": {},
-            "renameByName": {
-              "EdpDiscount": "EDP Discount",
-              "Fee": "",
-              "RIFee": "Reservations",
-              "SavingsPlanRecurringFee": "Savings Plan",
-              "Tax": "",
-              "Total": "",
-              "Usage": ""
-            }
-          }
-        }
-      ],
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "elasticsearch",
-        "uid": "P31C819B24CF3C3C7"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "bars",
-            "fillOpacity": 90,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "normal"
-            },
-            "thresholdsStyle": {
-              "mode": "line+area"
-            }
-          },
-          "decimals": 1,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "green",
-                "value": 0
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Total"
-            },
-            "properties": [
-              {
-                "id": "custom.drawStyle",
-                "value": "line"
-              },
-              {
-                "id": "custom.lineWidth",
-                "value": 2
-              },
-              {
-                "id": "custom.fillOpacity",
-                "value": 0
-              },
-              {
-                "id": "custom.lineStyle",
-                "value": {
-                  "fill": "solid"
-                }
-              },
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                }
-              },
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "red",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 12,
-        "x": 12,
-        "y": 14
-      },
-      "hideTimeOverride": false,
-      "id": 485,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "displayMode": "table",
-          "placement": "right",
-          "showLegend": true,
-          "sortBy": "Last *",
-          "sortDesc": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      },
-      "targets": [
-        {
-          "alias": "",
-          "bucketAggs": [
-            {
-              "field": "line_item_legal_entity.keyword",
-              "id": "3",
-              "settings": {
-                "min_doc_count": "1",
-                "order": "desc",
-                "orderBy": "1",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "field": "line_item_usage_start_date",
-              "id": "2",
-              "settings": {
-                "interval": "$interval",
-                "min_doc_count": "0"
-              },
-              "type": "date_histogram"
-            }
-          ],
-          "datasource": {
-            "type": "elasticsearch",
-            "uid": "P31C819B24CF3C3C7"
-          },
-          "format": "table",
-          "luceneQueryType": "Metric",
-          "metrics": [
-            {
-              "field": "line_item_unblended_cost",
-              "id": "1",
-              "type": "sum"
-            }
-          ],
-          "query": "line_item_usage_account_id.keyword:$account_id AND\nbill_billing_entity.keyword:\"AWS Marketplace\"",
-          "queryType": "lucene",
-          "refId": "A",
-          "timeField": "line_item_usage_start_date"
-        }
-      ],
-      "title": "Marketplace Cost by Entity",
-      "transformations": [
-        {
-          "id": "calculateField",
-          "options": {
-            "alias": "Total",
-            "mode": "reduceRow",
-            "reduce": {
-              "include": [],
-              "reducer": "sum"
-            }
-          }
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {},
-            "includeByName": {},
-            "indexByName": {},
-            "renameByName": {
-              "EdpDiscount": "EDP Discount",
-              "Fee": "",
-              "RIFee": "Reservations",
-              "SavingsPlanRecurringFee": "Savings Plan",
-              "Tax": "",
-              "Total": "",
-              "Usage": ""
-            }
-          }
-        }
-      ],
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "elasticsearch",
-        "uid": "P31C819B24CF3C3C7"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "bars",
-            "fillOpacity": 90,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "normal"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "decimals": 1,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Total"
-            },
-            "properties": [
-              {
-                "id": "custom.drawStyle",
-                "value": "line"
-              },
-              {
-                "id": "custom.lineWidth",
-                "value": 2
-              },
-              {
-                "id": "custom.fillOpacity",
-                "value": 0
-              },
-              {
-                "id": "custom.lineStyle",
-                "value": {
-                  "fill": "solid"
-                }
-              },
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "dark-red",
-                  "mode": "fixed"
-                }
-              },
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byRegexp",
-              "options": "/.*MoM Change.*/"
-            },
-            "properties": [
-              {
-                "id": "custom.drawStyle",
-                "value": "line"
-              },
-              {
-                "id": "custom.lineWidth",
-                "value": 2
-              },
-              {
-                "id": "custom.fillOpacity",
-                "value": 0
-              },
-              {
-                "id": "custom.axisPlacement",
-                "value": "right"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 15,
-        "x": 0,
-        "y": 21
-      },
-      "hideTimeOverride": false,
-      "id": 484,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "displayMode": "table",
-          "placement": "right",
-          "showLegend": true,
-          "sortBy": "Last *",
-          "sortDesc": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      },
-      "targets": [
-        {
-          "alias": "",
-          "bucketAggs": [
-            {
-              "field": "line_item_usage_account_name.keyword",
-              "id": "3",
-              "settings": {
-                "min_doc_count": "1",
-                "order": "desc",
-                "orderBy": "1",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "field": "line_item_usage_start_date",
-              "id": "2",
-              "settings": {
-                "interval": "$interval",
-                "min_doc_count": "0"
-              },
-              "type": "date_histogram"
-            }
-          ],
-          "datasource": {
-            "type": "elasticsearch",
-            "uid": "P31C819B24CF3C3C7"
-          },
-          "format": "table",
-          "luceneQueryType": "Metric",
-          "metrics": [
-            {
-              "field": "line_item_net_unblended_cost",
-              "id": "1",
-              "type": "sum"
-            }
-          ],
-          "query": "line_item_usage_account_id.keyword:$account_id",
-          "queryType": "lucene",
-          "refId": "A",
-          "timeField": "line_item_usage_start_date"
-        },
-        {
-          "alias": "Total",
-          "bucketAggs": [
-            {
-              "field": "line_item_usage_start_date",
-              "id": "2",
-              "settings": {
-                "interval": "$interval",
-                "min_doc_count": "0"
-              },
-              "type": "date_histogram"
-            }
-          ],
-          "datasource": {
-            "type": "elasticsearch",
-            "uid": "P31C819B24CF3C3C7"
-          },
-          "format": "table",
-          "hide": false,
-          "luceneQueryType": "Metric",
-          "metrics": [
-            {
-              "field": "line_item_net_unblended_cost",
-              "id": "1",
-              "settings": {
-                "script": "_value + 0.00001"
-              },
-              "type": "sum"
-            }
-          ],
-          "query": "line_item_usage_account_id.keyword:$account_id",
-          "queryType": "lucene",
-          "refId": "B",
-          "timeField": "line_item_usage_start_date"
-        },
-        {
-          "alias": "MoM Change",
-          "bucketAggs": [
-            {
-              "field": "line_item_usage_start_date",
-              "id": "2",
-              "settings": {
-                "interval": "$interval",
-                "min_doc_count": "0"
-              },
-              "type": "date_histogram"
-            }
-          ],
-          "datasource": {
-            "type": "elasticsearch",
-            "uid": "P31C819B24CF3C3C7"
-          },
-          "format": "table",
-          "hide": false,
-          "luceneQueryType": "Metric",
-          "metrics": [
-            {
-              "field": "line_item_net_unblended_cost",
-              "hide": true,
-              "id": "1",
-              "type": "sum"
-            },
-            {
-              "field": "1",
-              "id": "3",
-              "pipelineAgg": "1",
-              "type": "derivative"
-            }
-          ],
-          "query": "line_item_usage_account_id.keyword:$account_id",
-          "queryType": "lucene",
-          "refId": "C",
-          "timeField": "line_item_usage_start_date"
-        }
-      ],
-      "title": "Total Costs by Account",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "elasticsearch",
-        "uid": "P31C819B24CF3C3C7"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "axisSoftMin": 0,
-            "fillOpacity": 80,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineWidth": 1,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "max": 1,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "percentunit"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 9,
-        "x": 15,
-        "y": 21
-      },
-      "id": 230,
-      "options": {
-        "barRadius": 0,
-        "barWidth": 0.97,
-        "fullHighlight": false,
-        "groupWidth": 0.7,
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "orientation": "auto",
-        "showValue": "auto",
-        "stacking": "percent",
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        },
-        "xTickLabelRotation": 0,
-        "xTickLabelSpacing": 100
-      },
-      "pluginVersion": "8.5.21",
-      "targets": [
-        {
-          "alias": "",
-          "bucketAggs": [
-            {
-              "field": "pricing_term.keyword",
-              "id": "3",
-              "settings": {
-                "min_doc_count": "0",
-                "order": "desc",
-                "orderBy": "1",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "field": "line_item_usage_start_date",
-              "id": "2",
-              "settings": {
-                "interval": "1M",
-                "min_doc_count": "0"
-              },
-              "type": "date_histogram"
-            }
-          ],
-          "datasource": {
-            "type": "elasticsearch",
-            "uid": "P31C819B24CF3C3C7"
-          },
-          "format": "table",
-          "luceneQueryType": "Metric",
-          "metrics": [
-            {
-              "field": "line_item_unblended_cost",
-              "id": "1",
-              "type": "sum"
-            }
-          ],
-          "query": "line_item_usage_account_id.keyword:$account_id AND \n(line_item_product_code.keyword:AmazonEC2 OR\n line_item_product_code.keyword:ComputeSavingsPlans)",
-          "queryType": "lucene",
-          "refId": "A",
-          "timeField": "line_item_usage_start_date"
-        }
-      ],
-      "title": "Pricing Term - EC2",
-      "transformations": [
-        {
-          "id": "calculateField",
-          "options": {
-            "alias": "Total",
-            "mode": "reduceRow",
-            "reduce": {
-              "reducer": "sum"
-            }
-          }
-        },
-        {
-          "id": "calculateField",
-          "options": {
-            "alias": "OnDemand Percent",
-            "binary": {
-              "left": "OnDemand",
-              "operator": "/",
-              "reducer": "sum",
-              "right": "Total"
-            },
-            "mode": "binary",
-            "reduce": {
-              "reducer": "sum"
-            }
-          }
-        },
-        {
-          "id": "calculateField",
-          "options": {
-            "alias": "Reserved Percent",
-            "binary": {
-              "left": "Reserved",
-              "operator": "/",
-              "reducer": "sum",
-              "right": "Total"
-            },
-            "mode": "binary",
-            "reduce": {
-              "reducer": "sum"
-            }
-          }
-        },
-        {
-          "id": "calculateField",
-          "options": {
-            "alias": "Spot Percent",
-            "binary": {
-              "left": "Spot",
-              "operator": "/",
-              "reducer": "sum",
-              "right": "Total"
-            },
-            "mode": "binary",
-            "reduce": {
-              "reducer": "sum"
-            }
-          }
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "OnDemand": true,
-              "Reserved": true,
-              "Spot": true,
-              "Total": true
-            },
-            "indexByName": {},
-            "renameByName": {
-              "OnDemand Percent": "On Demand",
-              "Reserved Percent": "Reserved",
-              "Spot Percent": "Spot"
-            }
-          }
-        }
-      ],
-      "type": "barchart"
-    },
-    {
-      "datasource": {
-        "type": "elasticsearch",
-        "uid": "P31C819B24CF3C3C7"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "bars",
-            "fillOpacity": 90,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "normal"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "decimals": 1,
-          "mappings": [],
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Total"
-            },
-            "properties": [
-              {
-                "id": "custom.drawStyle",
-                "value": "line"
-              },
-              {
-                "id": "custom.lineWidth",
-                "value": 2
-              },
-              {
-                "id": "custom.fillOpacity",
-                "value": 0
-              },
-              {
-                "id": "custom.lineStyle",
-                "value": {
-                  "fill": "solid"
-                }
-              },
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "dark-red",
-                  "mode": "fixed"
-                }
-              },
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 15,
-        "x": 0,
-        "y": 28
-      },
-      "id": 21,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "displayMode": "table",
-          "placement": "right",
-          "showLegend": true,
-          "sortBy": "Last *",
-          "sortDesc": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      },
-      "targets": [
-        {
-          "alias": "",
-          "bucketAggs": [
-            {
-              "field": "line_item_product_code.keyword",
-              "id": "3",
-              "settings": {
-                "min_doc_count": "1",
-                "order": "desc",
-                "orderBy": "1",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "field": "line_item_usage_start_date",
-              "id": "2",
-              "settings": {
-                "interval": "$interval",
-                "min_doc_count": "0"
-              },
-              "type": "date_histogram"
-            }
-          ],
-          "datasource": {
-            "type": "elasticsearch",
-            "uid": "P31C819B24CF3C3C7"
-          },
-          "format": "table",
-          "luceneQueryType": "Metric",
-          "metrics": [
-            {
-              "field": "line_item_unblended_cost",
-              "id": "1",
-              "type": "sum"
-            }
-          ],
-          "query": "line_item_usage_account_id.keyword:$account_id AND NOT bill_billing_entity.keyword:\"AWS Marketplace\"",
-          "queryType": "lucene",
-          "refId": "A",
-          "timeField": "line_item_usage_start_date"
-        }
-      ],
-      "title": "Total Costs by Service",
-      "transformations": [
-        {
-          "id": "calculateField",
-          "options": {
-            "alias": "Total",
-            "mode": "reduceRow",
-            "reduce": {
-              "reducer": "sum"
-            },
-            "replaceFields": false
-          }
-        }
-      ],
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "elasticsearch",
-        "uid": "P31C819B24CF3C3C7"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "axisSoftMin": 0,
-            "fillOpacity": 80,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineWidth": 1,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "max": 1,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "percentunit"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 9,
-        "x": 15,
-        "y": 28
-      },
-      "id": 249,
-      "options": {
-        "barRadius": 0,
-        "barWidth": 0.97,
-        "fullHighlight": false,
-        "groupWidth": 0.7,
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "orientation": "auto",
-        "showValue": "auto",
-        "stacking": "percent",
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        },
-        "xTickLabelRotation": 0,
-        "xTickLabelSpacing": 100
-      },
-      "pluginVersion": "8.5.21",
-      "targets": [
-        {
-          "alias": "",
-          "bucketAggs": [
-            {
-              "field": "pricing_term.keyword",
-              "id": "3",
-              "settings": {
-                "min_doc_count": "0",
-                "order": "desc",
-                "orderBy": "1",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "field": "line_item_usage_start_date",
-              "id": "2",
-              "settings": {
-                "interval": "1M",
-                "min_doc_count": "0"
-              },
-              "type": "date_histogram"
-            }
-          ],
-          "datasource": {
-            "type": "elasticsearch",
-            "uid": "P31C819B24CF3C3C7"
-          },
-          "format": "table",
-          "luceneQueryType": "Metric",
-          "metrics": [
-            {
-              "field": "line_item_unblended_cost",
-              "id": "1",
-              "type": "sum"
-            }
-          ],
-          "query": "line_item_usage_account_id.keyword:$account_id AND \nline_item_product_code.keyword:AmazonRDS",
-          "queryType": "lucene",
-          "refId": "A",
-          "timeField": "line_item_usage_start_date"
-        }
-      ],
-      "title": "Pricing Term - RDS",
-      "transformations": [
-        {
-          "id": "calculateField",
-          "options": {
-            "alias": "Total",
-            "mode": "reduceRow",
-            "reduce": {
-              "reducer": "sum"
-            }
-          }
-        },
-        {
-          "id": "calculateField",
-          "options": {
-            "alias": "OnDemand Percent",
-            "binary": {
-              "left": "OnDemand",
-              "operator": "/",
-              "reducer": "sum",
-              "right": "Total"
-            },
-            "mode": "binary",
-            "reduce": {
-              "reducer": "sum"
-            }
-          }
-        },
-        {
-          "id": "calculateField",
-          "options": {
-            "alias": "Reserved Percent",
-            "binary": {
-              "left": "Reserved",
-              "operator": "/",
-              "reducer": "sum",
-              "right": "Total"
-            },
-            "mode": "binary",
-            "reduce": {
-              "reducer": "sum"
-            }
-          }
-        },
-        {
-          "id": "calculateField",
-          "options": {
-            "alias": "Spot Percent",
-            "binary": {
-              "left": "Spot",
-              "operator": "/",
-              "reducer": "sum",
-              "right": "Total"
-            },
-            "mode": "binary",
-            "reduce": {
-              "reducer": "sum"
-            }
-          }
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "OnDemand": true,
-              "Reserved": true,
-              "Spot": true,
-              "Total": true
-            },
-            "indexByName": {},
-            "renameByName": {
-              "OnDemand Percent": "On Demand",
-              "Reserved Percent": "Reserved",
-              "Spot Percent": "Spot"
-            }
-          }
-        }
-      ],
-      "type": "barchart"
     },
     {
       "collapsed": true,
@@ -2793,7 +2794,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 35
+        "y": 14
       },
       "id": 25,
       "panels": [
@@ -2905,7 +2906,7 @@
             "h": 10,
             "w": 6,
             "x": 0,
-            "y": 36
+            "y": 15
           },
           "id": 23,
           "maxPerRow": 4,
@@ -2925,7 +2926,7 @@
               "sort": "desc"
             }
           },
-          "repeat": "main_services_service_breakdown",
+          "repeat": "aws_used_services",
           "repeatDirection": "h",
           "targets": [
             {
@@ -2965,13 +2966,13 @@
                   "type": "sum"
                 }
               ],
-              "query": " line_item_usage_account_id.keyword:$account_id AND line_item_product_code.keyword:$main_services_service_breakdown",
+              "query": " line_item_usage_account_id.keyword:$account_id AND line_item_product_code.keyword:$aws_used_services",
               "queryType": "lucene",
               "refId": "A",
               "timeField": "line_item_usage_start_date"
             }
           ],
-          "title": "$main_services_service_breakdown",
+          "title": "$aws_used_services",
           "transformations": [
             {
               "id": "calculateField",
@@ -2996,7 +2997,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 36
+        "y": 15
       },
       "id": 59,
       "panels": [
@@ -3049,8 +3050,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -3108,7 +3108,7 @@
             "h": 12,
             "w": 8,
             "x": 0,
-            "y": 37
+            "y": 16
           },
           "id": 57,
           "maxPerRow": 3,
@@ -3128,7 +3128,7 @@
               "sort": "desc"
             }
           },
-          "repeat": "main_services_usage_type_breakdown",
+          "repeat": "aws_used_services",
           "repeatDirection": "h",
           "targets": [
             {
@@ -3168,13 +3168,13 @@
                   "type": "sum"
                 }
               ],
-              "query": "line_item_usage_account_id.keyword:$account_id AND line_item_product_code.keyword:$main_services_usage_type_breakdown",
+              "query": "line_item_usage_account_id.keyword:$account_id AND line_item_product_code.keyword:$aws_used_services",
               "queryType": "lucene",
               "refId": "A",
               "timeField": "line_item_usage_start_date"
             }
           ],
-          "title": "$main_services_usage_type_breakdown",
+          "title": "$aws_used_services",
           "transformations": [
             {
               "id": "calculateField",
@@ -3199,7 +3199,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 37
+        "y": 16
       },
       "id": 206,
       "panels": [
@@ -3543,7 +3543,6 @@
       "type": "row"
     }
   ],
-  "refresh": "",
   "schemaVersion": 39,
   "tags": [],
   "templating": {
@@ -3640,255 +3639,31 @@
       {
         "allValue": "*",
         "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "selected": true,
+          "text": [
+            "None"
+          ],
+          "value": [
+            ""
+          ]
         },
-        "hide": 2,
-        "includeAll": true,
-        "label": "main_services_service_breakdown",
-        "multi": false,
-        "name": "main_services_service_breakdown",
-        "options": [
-          {
-            "selected": true,
-            "text": "All",
-            "value": "$__all"
-          },
-          {
-            "selected": false,
-            "text": "AmazonEC2",
-            "value": "AmazonEC2"
-          },
-          {
-            "selected": false,
-            "text": "ComputeSavingsPlans",
-            "value": "ComputeSavingsPlans"
-          },
-          {
-            "selected": false,
-            "text": "AmazonRDS",
-            "value": "AmazonRDS"
-          },
-          {
-            "selected": false,
-            "text": "AmazonS3",
-            "value": "AmazonS3"
-          },
-          {
-            "selected": false,
-            "text": "AWSELB",
-            "value": "AWSELB"
-          },
-          {
-            "selected": false,
-            "text": "AmazonVPC",
-            "value": "AmazonVPC"
-          },
-          {
-            "selected": false,
-            "text": "AmazonCloudFront",
-            "value": "AmazonCloudFront"
-          },
-          {
-            "selected": false,
-            "text": "AmazonECR",
-            "value": "AmazonECR"
-          },
-          {
-            "selected": false,
-            "text": "AmazonEKS",
-            "value": "AmazonEKS"
-          },
-          {
-            "selected": false,
-            "text": "AmazonRoute53",
-            "value": "AmazonRoute53"
-          },
-          {
-            "selected": false,
-            "text": "AmazonCloudWatch",
-            "value": "AmazonCloudWatch"
-          },
-          {
-            "selected": false,
-            "text": "AWSSecretsManager",
-            "value": "AWSSecretsManager"
-          },
-          {
-            "selected": false,
-            "text": "AWSLambda",
-            "value": "AWSLambda"
-          },
-          {
-            "selected": false,
-            "text": "AWSQueueService",
-            "value": "AWSQueueService"
-          },
-          {
-            "selected": false,
-            "text": "AmazonSNS",
-            "value": "AmazonSNS"
-          },
-          {
-            "selected": false,
-            "text": "AWSBackup",
-            "value": "AWSBackup"
-          },
-          {
-            "selected": false,
-            "text": "AmazonElastiCache",
-            "value": "AmazonElastiCache"
-          },
-          {
-            "selected": false,
-            "text": "AmazonGuardDuty",
-            "value": "AmazonGuardDuty"
-          },
-          {
-            "selected": false,
-            "text": "AmazonAthena",
-            "value": "AmazonAthena"
-          },
-          {
-            "selected": false,
-            "text": "AmazonCognito",
-            "value": "AmazonCognito"
-          },
-          {
-            "selected": false,
-            "text": "awswaf",
-            "value": "awswaf"
-          }
-        ],
-        "query": "AmazonEC2, ComputeSavingsPlans, AmazonRDS, AmazonS3, AWSELB, AmazonVPC, AmazonCloudFront, AmazonECR, AmazonEKS, AmazonRoute53, AmazonCloudWatch, AWSSecretsManager, AWSLambda, AWSQueueService, AmazonSNS, AWSBackup, AmazonElastiCache, AmazonGuardDuty, AmazonAthena, AmazonCognito,awswaf",
-        "queryValue": "",
-        "skipUrlSync": false,
-        "type": "custom"
-      },
-      {
-        "allValue": "*",
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "P31C819B24CF3C3C7"
         },
-        "hide": 2,
-        "includeAll": true,
-        "label": "main_services_usage_type_breakdown",
-        "multi": false,
-        "name": "main_services_usage_type_breakdown",
-        "options": [
-          {
-            "selected": true,
-            "text": "All",
-            "value": "$__all"
-          },
-          {
-            "selected": false,
-            "text": "AmazonEC2",
-            "value": "AmazonEC2"
-          },
-          {
-            "selected": false,
-            "text": "AmazonRDS",
-            "value": "AmazonRDS"
-          },
-          {
-            "selected": false,
-            "text": "AmazonS3",
-            "value": "AmazonS3"
-          },
-          {
-            "selected": false,
-            "text": "AWSELB",
-            "value": "AWSELB"
-          },
-          {
-            "selected": false,
-            "text": "AmazonVPC",
-            "value": "AmazonVPC"
-          },
-          {
-            "selected": false,
-            "text": "AmazonCloudFront",
-            "value": "AmazonCloudFront"
-          },
-          {
-            "selected": false,
-            "text": "AmazonECR",
-            "value": "AmazonECR"
-          },
-          {
-            "selected": false,
-            "text": "AmazonEKS",
-            "value": "AmazonEKS"
-          },
-          {
-            "selected": false,
-            "text": "AmazonRoute53",
-            "value": "AmazonRoute53"
-          },
-          {
-            "selected": false,
-            "text": "AmazonCloudWatch",
-            "value": "AmazonCloudWatch"
-          },
-          {
-            "selected": false,
-            "text": "AWSSecretsManager",
-            "value": "AWSSecretsManager"
-          },
-          {
-            "selected": false,
-            "text": "AWSLambda",
-            "value": "AWSLambda"
-          },
-          {
-            "selected": false,
-            "text": "AWSQueueService",
-            "value": "AWSQueueService"
-          },
-          {
-            "selected": false,
-            "text": "AmazonSNS",
-            "value": "AmazonSNS"
-          },
-          {
-            "selected": false,
-            "text": "AWSBackup",
-            "value": "AWSBackup"
-          },
-          {
-            "selected": false,
-            "text": "AmazonElastiCache",
-            "value": "AmazonElastiCache"
-          },
-          {
-            "selected": false,
-            "text": "AmazonGuardDuty",
-            "value": "AmazonGuardDuty"
-          },
-          {
-            "selected": false,
-            "text": "AmazonAthena",
-            "value": "AmazonAthena"
-          },
-          {
-            "selected": false,
-            "text": "AmazonCognito",
-            "value": "AmazonCognito"
-          },
-          {
-            "selected": false,
-            "text": "awswaf",
-            "value": "awswaf"
-          }
-        ],
-        "query": "AmazonEC2, AmazonRDS, AmazonS3, AWSELB, AmazonVPC, AmazonCloudFront, AmazonECR, AmazonEKS, AmazonRoute53, AmazonCloudWatch, AWSSecretsManager, AWSLambda, AWSQueueService, AmazonSNS, AWSBackup, AmazonElastiCache, AmazonGuardDuty, AmazonAthena, AmazonCognito,awswaf",
-        "queryValue": "",
+        "definition": "{\"find\": \"terms\", \"field\": \"line_item_product_code.keyword\", \"query\": \"line_item_usage_account_id.keyword:$account_id\", \"orderBy\": \"doc_count\", \"order\": \"desc\"}",
+        "hide": 0,
+        "includeAll": false,
+        "label": "AWS Services",
+        "multi": true,
+        "name": "aws_used_services",
+        "options": [],
+        "query": "{\"find\": \"terms\", \"field\": \"line_item_product_code.keyword\", \"query\": \"line_item_usage_account_id.keyword:$account_id\", \"orderBy\": \"doc_count\", \"order\": \"desc\"}",
+        "refresh": 2,
+        "regex": "",
         "skipUrlSync": false,
-        "type": "custom"
+        "sort": 0,
+        "type": "query"
       },
       {
         "allValue": "*",
@@ -3918,17 +3693,6 @@
         "skipUrlSync": false,
         "sort": 0,
         "type": "query"
-      },
-      {
-        "datasource": {
-          "type": "elasticsearch",
-          "uid": "P31C819B24CF3C3C7"
-        },
-        "filters": [],
-        "hide": 0,
-        "name": "Filters",
-        "skipUrlSync": false,
-        "type": "adhoc"
       }
     ]
   },
