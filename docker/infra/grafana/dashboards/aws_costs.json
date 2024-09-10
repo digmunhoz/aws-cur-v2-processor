@@ -1554,7 +1554,7 @@
                   "field": "line_item_usage_start_date",
                   "id": "2",
                   "settings": {
-                    "interval": "$interval",
+                    "interval": "1M",
                     "min_doc_count": "0"
                   },
                   "type": "date_histogram"
@@ -1617,7 +1617,7 @@
                   "field": "line_item_usage_start_date",
                   "id": "2",
                   "settings": {
-                    "interval": "$interval",
+                    "interval": "1M",
                     "min_doc_count": "0"
                   },
                   "type": "date_histogram"
@@ -1649,7 +1649,7 @@
                   "field": "line_item_usage_start_date",
                   "id": "2",
                   "settings": {
-                    "interval": "$interval",
+                    "interval": "1M",
                     "min_doc_count": "0"
                   },
                   "type": "date_histogram"
@@ -1855,7 +1855,7 @@
                   "field": "line_item_usage_start_date",
                   "id": "2",
                   "settings": {
-                    "interval": "$interval",
+                    "interval": "1M",
                     "min_doc_count": "0"
                   },
                   "type": "date_histogram"
@@ -2036,6 +2036,31 @@
                   {
                     "id": "custom.axisPlacement",
                     "value": "right"
+                  },
+                  {
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "dash": [
+                        10,
+                        10
+                      ],
+                      "fill": "dash"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "MoM Change"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "purple",
+                      "mode": "fixed"
+                    }
                   }
                 ]
               }
@@ -2084,7 +2109,7 @@
                   "field": "line_item_usage_start_date",
                   "id": "2",
                   "settings": {
-                    "interval": "$interval",
+                    "interval": "1M",
                     "min_doc_count": "0"
                   },
                   "type": "date_histogram"
@@ -2115,7 +2140,7 @@
                   "field": "line_item_usage_start_date",
                   "id": "2",
                   "settings": {
-                    "interval": "$interval",
+                    "interval": "1M",
                     "min_doc_count": "0"
                   },
                   "type": "date_histogram"
@@ -2150,7 +2175,7 @@
                   "field": "line_item_usage_start_date",
                   "id": "2",
                   "settings": {
-                    "interval": "$interval",
+                    "interval": "1M",
                     "min_doc_count": "0"
                   },
                   "type": "date_histogram"
@@ -2538,7 +2563,7 @@
                   "field": "line_item_usage_start_date",
                   "id": "2",
                   "settings": {
-                    "interval": "$interval",
+                    "interval": "1M",
                     "min_doc_count": "0"
                   },
                   "type": "date_histogram"
@@ -3698,7 +3723,7 @@
   },
   "time": {
     "from": "2024-01-01T00:00:00.000Z",
-    "to": "2024-08-31T23:59:59.000Z"
+    "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
