@@ -30,7 +30,6 @@ class ElasticsearchWriterAdapter(DatabaseWriter):
             "_meta": {"flow": "simple"},
         }
         try:
-            logging.info(f"Setting Index Template: cur-v2")
             self.es.indices.put_index_template(name="cur-v2", body=settings)
         except Exception as e:
             logging.error(e)
@@ -38,7 +37,6 @@ class ElasticsearchWriterAdapter(DatabaseWriter):
 
     def write(self, data):
         try:
-            self.setup_index_template()
             for success, info in helpers.parallel_bulk(
                 self.es,
                 data,

@@ -22,13 +22,23 @@ class ProcessParquetFile:
     def execute(self, path_or_bucket):
 
         try:
+            self.pre_process_data()
             files = self.input_reader.list_files(path_or_bucket)
             for file in files:
-                data = self.input_reader.read(file)
-                self._process_data(data, file)
+                logging.info(f"Start reading file {file}")
+                _ = self.input_reader.read(file, self._process_data)
+
+                if not Settings.REPROCESS:
+                    suffix = ".processed"
+                    self.file_manager.rename(file, suffix, self.storage_type)
+
         except Exception as e:
             logging.error(e)
             raise
+
+    def pre_process_data(self):
+        logging.info(f"Setting Index Template: cur-v2")
+        self.database_writer.setup_index_template()
 
     def _process_data(self, data, file):
 
@@ -40,10 +50,6 @@ class ProcessParquetFile:
 
         logging.info(f"Writing file: {file} into elasticsearch")
         self.database_writer.write(transformed_data)
-
-        if not Settings.REPROCESS:
-            suffix = ".processed"
-            self.file_manager.rename(file, suffix, self.storage_type)
 
 
 class ValidateData:

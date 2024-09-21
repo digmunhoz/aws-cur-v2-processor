@@ -15,6 +15,7 @@ class Settings:
     AWS_BUCKET_NAME = config("AWS_BUCKET_NAME", default="")
     AWS_BUCKET_PREFIX = config("AWS_BUCKET_PREFIX", default="")
     REPROCESS = config("REPROCESS", default=False, cast=config.boolean)
+    DEBUG = config("DEBUG", default=False, cast=config.boolean)
 
     if STORAGE_TYPE == "S3":
         SOURCE_FILE = AWS_BUCKET_NAME
