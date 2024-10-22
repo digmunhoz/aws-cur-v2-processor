@@ -5,7 +5,7 @@ build:
 	@docker compose -f docker/docker-compose.yaml build
 
 cur:
-	@docker compose -f docker/docker-compose.yaml run --remove-orphans cur
+	@docker compose -f docker/docker-compose.yaml run --remove-orphans --rm cur
 
 stop:
 	@docker compose -f docker/docker-compose.yaml down -v
