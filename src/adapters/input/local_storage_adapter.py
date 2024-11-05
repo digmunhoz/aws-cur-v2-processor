@@ -30,4 +30,19 @@ class LocalReaderAdapter(ParquetReader):
         else:
             file_extension = ".parquet"
 
-        return glob.glob(rf"{directory_path}/*{file_extension}")
+        files = glob.glob(rf"{directory_path}/**/*{file_extension}", recursive=True)
+
+        result = [(file, self.extract_billing_period(file)) for file in files]
+
+        return result
+
+
+    def extract_billing_period(self, file_path):
+
+        parts = file_path.split('/')
+
+        for part in parts:
+            if 'BILLING_PERIOD=' in part:
+                return part.split('=')[1]
+
+        return None

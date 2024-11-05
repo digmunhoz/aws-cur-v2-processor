@@ -21,9 +21,7 @@ class ElasticsearchWriterAdapter(DatabaseWriter):
                     "index.number_of_replicas": "0",
                     "index.refresh_interval": "1m",
                 },
-                "mappings": {
-                    "properties": {}
-                }
+                "mappings": {"properties": {}},
             },
             "index_patterns": ["aws-cur-v2*"],
             "composed_of": [],
@@ -54,3 +52,13 @@ class ElasticsearchWriterAdapter(DatabaseWriter):
         except Exception as e:
             logging.error(f"Exception during bulk insert operation: {e}", exc_info=True)
             raise
+
+    def delete_index_if_exists(self, index_name):
+        if self.es.indices.exists(index=index_name):
+            try:
+                self.es.indices.delete(index=index_name)
+                logging.info(f"Index '{index_name}' deleted")
+            except Exception as e:
+                logging.error(f"Error deleting index '{index_name}': {e}")
+        else:
+            logging.info(f"Index '{index_name}' does not exist")

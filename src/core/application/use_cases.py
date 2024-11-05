@@ -22,9 +22,11 @@ class ProcessParquetFile:
     def execute(self, path_or_bucket):
 
         try:
-            self.pre_process_data()
             files = self.input_reader.list_files(path_or_bucket)
-            for file in files:
+            billing_periods = list(set(item[1] for item in files))
+            self.pre_process_data(billing_periods)
+
+            for file, _ in files:
                 logging.info(f"Start reading file {file}")
                 _ = self.input_reader.read(file, self._process_data)
 
@@ -36,7 +38,12 @@ class ProcessParquetFile:
             logging.error(e)
             raise
 
-    def pre_process_data(self):
+    def pre_process_data(self, billing_periods):
+
+        for billing_period in billing_periods:
+            logging.info(f"Deleting index {billing_period} if exists")
+            self.database_writer.delete_index_if_exists(f"aws-cur-v2_{billing_period}")
+
         logging.info(f"Setting Index Template: cur-v2")
         self.database_writer.setup_index_template()
 

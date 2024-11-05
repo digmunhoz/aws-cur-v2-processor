@@ -53,8 +53,8 @@ To stop all running containers:
 make stop
 ```
 
-### Processing Parquet Files
-Place your .parquet files in the parquet_files directory. After processing, the files will be renamed with the .processed extension.
+### Processing Parquet Files Locally
+Place your .parquet files in a directory formatted as BILLING_PERIOD=YYYY-MM. After processing, the files will be renamed with the .processed extension. Make sure to organize your files accordingly to ensure proper processing.
 
 ## Configuration Variables
 

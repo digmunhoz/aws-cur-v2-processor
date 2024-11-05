@@ -1,14 +1,19 @@
 import hashlib
 from datetime import datetime
 
+
 class DataValidator:
     def validate(self, data):
         return True
 
+
 class DataTransformer:
     def clean_item(self, item):
-        # Replaces NaN to None
-        return {k: (None if (isinstance(v, float) and v != v) else v) for k, v in item.items()}
+        # Replaces NaN to 0
+        return {
+            k: (0 if (isinstance(v, float) and v != v) else v)
+            for k, v in item.items()
+        }
 
     def transform(self, data):
 
@@ -28,20 +33,25 @@ class DataTransformer:
         return bulk_data
 
     def gen_hash(self, document):
-        dt_field = document["line_item_usage_start_date"]
-        timestamp = dt_field.timestamp()
-        hash_string = str(timestamp)
-        fields = ["bill_payer_account_id", "identity_line_item_id", "line_item_usage_account_id", "product_sku"]
+        hash_string = str(document["line_item_usage_start_date"])
+        fields = [
+            "bill_payer_account_id",
+            "identity_line_item_id",
+            "line_item_usage_account_id",
+        ]
 
         for field in fields:
             value = document.get(field)
             if value:
                 hash_string += value
-        return hashlib.sha256(hash_string.encode("utf-8")).hexdigest()
+
+        generated_id = hashlib.sha256(hash_string.encode("utf-8")).hexdigest()
+
+        return generated_id
 
     def gen_index_suffix(self, document):
         date_field = document["line_item_usage_start_date"]
         timestamp = date_field.timestamp()
         date_obj = datetime.fromtimestamp(timestamp)
-        index_suffix = date_obj.strftime('%Y-%m')
+        index_suffix = date_obj.strftime("%Y-%m")
         return str(index_suffix)

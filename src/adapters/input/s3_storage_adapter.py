@@ -57,6 +57,18 @@ class S3ReaderAdapter(ParquetReader):
                 for obj in page["Contents"]:
                     if obj["Key"].endswith(file_extension):
                         key = obj.get("Key")
-                        parquet_files.append(f"s3://{bucket_name}/{key}")
+                        billing_period = self.extract_billing_period(key)
+                        parquet_files.append((f"s3://{bucket_name}/{key}", billing_period))
 
         return parquet_files
+
+
+    def extract_billing_period(self, file_path):
+
+        parts = file_path.split('/')
+
+        for part in parts:
+            if 'BILLING_PERIOD=' in part:
+                return part.split('=')[1]
+
+        return None
