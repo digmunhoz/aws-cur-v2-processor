@@ -23,12 +23,12 @@ class ElasticsearchWriterAdapter(DatabaseWriter):
                 },
                 "mappings": {"properties": {}},
             },
-            "index_patterns": ["aws-cur-v2*"],
+            "index_patterns": [Settings.INDEX_PATTERN],
             "composed_of": [],
             "_meta": {"flow": "simple"},
         }
         try:
-            self.es.indices.put_index_template(name="cur-v2", body=settings)
+            self.es.indices.put_index_template(name=Settings.INDEX_TEMPLATE, body=settings)
         except Exception as e:
             logging.error(e)
             raise

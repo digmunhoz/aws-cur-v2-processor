@@ -1,6 +1,7 @@
 import hashlib
 from datetime import datetime
 
+from config.settings import Settings
 
 class DataValidator:
     def validate(self, data):
@@ -19,7 +20,7 @@ class DataTransformer:
 
         bulk_data = []
         index_suffix = self.gen_index_suffix(data[0])
-        index_name = f"aws-cur-v2_{index_suffix}"
+        index_name = f"{Settings.INDEX_NAME}{index_suffix}"
         for document in data:
             cleaned_document = self.clean_item(document)
             doc_hash_id = self.gen_hash(cleaned_document)

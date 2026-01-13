@@ -27,13 +27,13 @@ class OpensearchWriterAdapter(DatabaseWriter):
                     "properties": {},
                 },
             },
-            "index_patterns": ["aws-cur-v2*"],
+            "index_patterns": [Settings.INDEX_PATTERN],
             "composed_of": [],
             "_meta": {"flow": "simple"},
         }
         try:
-            logging.info(f"Setting Index Template: cur-v2")
-            self.es.indices.put_index_template(name="cur-v2", body=settings)
+            logging.info(f"Setting Index Template: {Settings.INDEX_TEMPLATE}")
+            self.es.indices.put_index_template(name=Settings.INDEX_TEMPLATE, body=settings)
         except Exception as e:
             logging.error(e)
             raise

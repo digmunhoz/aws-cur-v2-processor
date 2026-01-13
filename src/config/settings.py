@@ -16,6 +16,9 @@ class Settings:
     AWS_BUCKET_PREFIX = config("AWS_BUCKET_PREFIX", default="")
     REPROCESS = config("REPROCESS", default=False, cast=config.boolean)
     DEBUG = config("DEBUG", default=False, cast=config.boolean)
+    INDEX_NAME = config("INDEX_NAME", default="aws-cur-v2_")
+    INDEX_PATTERN = config("INDEX_PATTERN", default="aws-cur-v2*")
+    INDEX_TEMPLATE = config("INDEX_TEMPLATE", default="cur-v2")
 
     if STORAGE_TYPE == "S3":
         SOURCE_FILE = AWS_BUCKET_NAME
