@@ -42,9 +42,9 @@ class ProcessParquetFile:
 
         for billing_period in billing_periods:
             logging.info(f"Deleting index {billing_period} if exists")
-            self.database_writer.delete_index_if_exists(f"aws-cur-v2_{billing_period}")
+            self.database_writer.delete_index_if_exists(f"{Settings.INDEX_NAME}{billing_period}")
 
-        logging.info(f"Setting Index Template: cur-v2")
+        logging.info(f"Setting Index Template: {Settings.INDEX_TEMPLATE}")
         self.database_writer.setup_index_template()
 
     def _process_data(self, data, file):
