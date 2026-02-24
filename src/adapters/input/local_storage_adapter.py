@@ -8,7 +8,7 @@ from ports.input.parquet_reader import ParquetReader
 
 class LocalReaderAdapter(ParquetReader):
     def read(self, file, callback):
-        chunk_size=50000
+        chunk_size=200
         logging.info(f"Reading file: {file} from storage 'LOCAL' in chunks")
 
         with open(file, 'rb') as f:

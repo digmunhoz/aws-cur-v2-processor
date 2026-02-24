@@ -6,6 +6,7 @@ class Settings:
     OUTPUT_ADAPTER = config("OUTPUT_ADAPTER", default="opensearch")
     OUTPUT_ADAPTER_HOST = config("OUTPUT_ADAPTER_HOST", default="opensearch")
     OUTPUT_ADAPTER_PORT = config("OUTPUT_ADAPTER_PORT", default=9200)
+    INDEX_PREFIX  = config("INDEX_PREFIX", default="aws-cur-v2_")
     WORKER_THREADS = config("WORKER_THREADS", default=2, cast=eval)
     STORAGE_TYPE = config("STORAGE_TYPE", default="LOCAL")
     AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID", default=None)

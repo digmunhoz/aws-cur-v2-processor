@@ -1,5 +1,6 @@
 import hashlib
 from datetime import datetime
+from config.settings import Settings
 
 
 class DataValidator:
@@ -8,18 +9,18 @@ class DataValidator:
 
 
 class DataTransformer:
+
     def clean_item(self, item):
         # Replaces NaN to 0
         return {
-            k: (0 if (isinstance(v, float) and v != v) else v)
-            for k, v in item.items()
+            k: (0 if (isinstance(v, float) and v != v) else v) for k, v in item.items()
         }
 
     def transform(self, data):
 
         bulk_data = []
         index_suffix = self.gen_index_suffix(data[0])
-        index_name = f"aws-cur-v2_{index_suffix}"
+        index_name = f"{Settings.INDEX_PREFIX}{index_suffix}"
         for document in data:
             cleaned_document = self.clean_item(document)
             doc_hash_id = self.gen_hash(cleaned_document)

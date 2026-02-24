@@ -5,7 +5,7 @@ WORKDIR ${_workdir}
 RUN pip install poetry
 
 COPY src/poetry.lock src/pyproject.toml ${_workdir}/
-RUN poetry install
+RUN poetry install --no-root
 
 COPY src/ ${_workdir}/
 

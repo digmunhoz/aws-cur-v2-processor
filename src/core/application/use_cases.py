@@ -41,8 +41,8 @@ class ProcessParquetFile:
     def pre_process_data(self, billing_periods):
 
         for billing_period in billing_periods:
-            logging.info(f"Deleting index {billing_period} if exists")
-            self.database_writer.delete_index_if_exists(f"aws-cur-v2_{billing_period}")
+            logging.info(f"Deleting index {Settings.INDEX_PREFIX}{billing_period} if exists")
+            self.database_writer.delete_index_if_exists(f"{Settings.INDEX_PREFIX}{billing_period}")
 
         logging.info(f"Setting Index Template: cur-v2")
         self.database_writer.setup_index_template()

@@ -19,7 +19,7 @@ class S3ReaderAdapter(ParquetReader):
         )
 
     def read(self, file, callback):
-        chunk_size = 50000
+        chunk_size = 5000
 
         bucket_name = urlparse(file).netloc
         object_key = urlparse(file).path.lstrip('/')
